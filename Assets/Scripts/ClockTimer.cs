@@ -43,6 +43,8 @@ public class ClockTimer : MonoBehaviour
             timeRemaining = 0f;
             running = false;
             SetRight(rightEnd);
+            UpdateText();
+            UpdateColor();
             onTimeUp?.Invoke();
             return;
         }
@@ -85,7 +87,10 @@ public class ClockTimer : MonoBehaviour
         if (isWarning && !warningTriggered)
         {
             warningTriggered = true;
-            warningFeedback?.PlayFeedbacks();
+            if (warningFeedback == null)
+                Debug.LogError("[ClockTimer] warningFeedback is not assigned!", this);
+            else
+                warningFeedback.PlayFeedbacks();
         }
     }
 
