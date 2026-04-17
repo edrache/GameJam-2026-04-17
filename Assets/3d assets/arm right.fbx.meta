@@ -3,7 +3,22 @@ guid: b8d0e52eb476a5345a69d7c2748c67e5
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: dlon
+    second: {fileID: 2100000, guid: 96779294f1c4672468c62dbe2827a49f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: rekawek
+    second: {fileID: 2100000, guid: cc3bcfe3ca51b474c9dc76e012521ea9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ubranie
+    second: {fileID: 2100000, guid: 64d260a7333f1f94b98f57020430f809, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
