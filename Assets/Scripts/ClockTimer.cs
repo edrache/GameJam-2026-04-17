@@ -1,9 +1,11 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class ClockTimer : MonoBehaviour
 {
     [SerializeField] private RectTransform fillRect;
+    [SerializeField] private TMP_Text timerText;
     [SerializeField] private float totalTime = 30f;
     [SerializeField] private float rightStart = 17f;
     [SerializeField] private float rightEnd = -190f;
@@ -37,6 +39,7 @@ public class ClockTimer : MonoBehaviour
         }
 
         SetRight(Mathf.Lerp(rightEnd, rightStart, timeRemaining / totalTime));
+        UpdateText();
     }
 
     public void StartTimer()
@@ -44,11 +47,21 @@ public class ClockTimer : MonoBehaviour
         timeRemaining = totalTime;
         running = true;
         SetRight(rightStart);
+        UpdateText();
     }
 
     public void StopTimer() => running = false;
 
     public void ResumeTimer() => running = true;
+
+    private void UpdateText()
+    {
+        if (timerText == null) return;
+        int total = Mathf.CeilToInt(timeRemaining);
+        int minutes = total / 60;
+        int seconds = total % 60;
+        timerText.text = $"{minutes}:{seconds:D2}";
+    }
 
     // RectTransform "Right" = -offsetMax.x
     private void SetRight(float right)
