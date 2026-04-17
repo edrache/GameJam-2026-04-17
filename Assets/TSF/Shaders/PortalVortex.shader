@@ -12,6 +12,11 @@ Shader "TSF/PortalVortex"
         _GlowIntensity ("Glow Intensity", Float) = 2.0
         _EdgeSoftness ("Edge Softness", Range(0.001, 0.5)) = 0.05
         _OpenAmount ("Open Amount", Range(0, 1)) = 1.0
+        _DistortionNoise ("Distortion Noise", 2D) = "gray" {}
+        _DistortionStrength ("Distortion Strength", Range(0, 0.2)) = 0.035
+        _DistortionScale ("Distortion Scale", Float) = 2.0
+        _DistortionSpeedX ("Distortion Speed X", Float) = 0.08
+        _DistortionSpeedY ("Distortion Speed Y", Float) = 0.05
     }
 
     SubShader
@@ -39,6 +44,9 @@ Shader "TSF/PortalVortex"
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
+            TEXTURE2D(_DistortionNoise);
+            SAMPLER(sampler_DistortionNoise);
+
             struct Attributes
             {
                 float4 positionOS : POSITION;
@@ -62,6 +70,11 @@ Shader "TSF/PortalVortex"
                 float _GlowIntensity;
                 float _EdgeSoftness;
                 float _OpenAmount;
+                float4 _DistortionNoise_ST;
+                float _DistortionStrength;
+                float _DistortionScale;
+                float _DistortionSpeedX;
+                float _DistortionSpeedY;
             CBUFFER_END
 
             static const float TAU = 6.28318530718;
@@ -121,6 +134,16 @@ Shader "TSF/PortalVortex"
                 return 0.5 + float2(cos(angle), sin(angle)) * radius;
             }
 
+            float2 sampleDistortion(float2 uv, float time)
+            {
+                float2 noiseUv = uv * _DistortionNoise_ST.xy * _DistortionScale + _DistortionNoise_ST.zw;
+                float2 speed = float2(_DistortionSpeedX, _DistortionSpeedY);
+                float2 pan = speed * time;
+                float2 noiseA = SAMPLE_TEXTURE2D(_DistortionNoise, sampler_DistortionNoise, noiseUv + pan).rg;
+                float2 noiseB = SAMPLE_TEXTURE2D(_DistortionNoise, sampler_DistortionNoise, noiseUv * 1.73 - pan.yx * 1.37).rg;
+                return noiseA + noiseB - 1.0;
+            }
+
             Varyings vert(Attributes input)
             {
                 Varyings output;
@@ -141,7 +164,12 @@ Shader "TSF/PortalVortex"
                 float alpha = 1.0 - smoothstep(visibleRadius - edgeSoftness, visibleRadius, sourceRadius);
                 alpha *= smoothstep(0.0, 0.02, openAmount);
 
-                float2 twistedUv = twirlUv(uv, _TwirlStrength, _TwirlOffset);
+                float distortionMask = smoothstep(0.05, 0.4, sourceRadius) * (1.0 - smoothstep(0.9, 1.0, sourceRadius));
+                distortionMask *= alpha;
+                float2 distortion = sampleDistortion(uv, _Time.y) * _DistortionStrength * distortionMask;
+                float2 distortedUv = uv + distortion;
+
+                float2 twistedUv = twirlUv(distortedUv, _TwirlStrength, _TwirlOffset);
                 float2 twistedCentered = twistedUv - 0.5;
                 float radius = saturate(length(twistedCentered) * 2.0 / visibleRadius);
                 float angle01 = frac(atan2(twistedCentered.y, twistedCentered.x) / TAU + 0.5);

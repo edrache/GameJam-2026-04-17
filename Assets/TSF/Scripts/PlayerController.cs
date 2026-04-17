@@ -25,8 +25,6 @@ namespace TSF
         void Awake()
         {
             _cc = GetComponent<CharacterController>();
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
         }
 
         void Update()

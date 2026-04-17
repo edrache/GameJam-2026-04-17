@@ -29,7 +29,20 @@ namespace TSF
             if (!ReInput.isReady) return;
             if (!_initialized) Initialize();
 
-            Look();
+            if (Input.GetKeyDown(KeyCode.Escape))
+                SetCursorLocked(!_cursorLocked);
+
+            if (_cursorLocked)
+                Look();
+        }
+
+        private bool _cursorLocked = true;
+
+        private void SetCursorLocked(bool locked)
+        {
+            _cursorLocked = locked;
+            Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.None;
+            Cursor.visible = !locked;
         }
 
         private void Initialize()
