@@ -35,6 +35,7 @@ Material:
     - _DistortionSpeedY: 0.05
     - _DistortionStrength: 0.018
     - _EdgeSoftness: 0.001
+    - _EdgeNoiseStrength: 0.08
     - _GlowIntensity: 2
     - _OpenAmount: 0.99
     - _ScrollSpeed: 1.5

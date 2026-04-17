@@ -17,6 +17,7 @@ Shader "TSF/PortalVortex"
         _DistortionScale ("Distortion Scale", Float) = 2.0
         _DistortionSpeedX ("Distortion Speed X", Float) = 0.08
         _DistortionSpeedY ("Distortion Speed Y", Float) = 0.05
+        _EdgeNoiseStrength ("Edge Noise Strength", Range(0, 0.3)) = 0.08
     }
 
     SubShader
@@ -75,6 +76,7 @@ Shader "TSF/PortalVortex"
                 float _DistortionScale;
                 float _DistortionSpeedX;
                 float _DistortionSpeedY;
+                float _EdgeNoiseStrength;
             CBUFFER_END
 
             static const float TAU = 6.28318530718;
@@ -161,7 +163,13 @@ Shader "TSF/PortalVortex"
                 float openAmount = saturate(_OpenAmount);
                 float visibleRadius = max(openAmount, 0.001);
                 float edgeSoftness = max(_EdgeSoftness, 0.001);
-                float alpha = 1.0 - smoothstep(visibleRadius - edgeSoftness, visibleRadius, sourceRadius);
+
+                float edgeNoise = dot(sampleDistortion(uv, _Time.y * 0.75), float2(0.5, 0.5));
+                float edgeNoiseMask = smoothstep(0.25, 0.9, sourceRadius);
+                float noisyVisibleRadius = visibleRadius + edgeNoise * _EdgeNoiseStrength * openAmount * edgeNoiseMask;
+                noisyVisibleRadius = clamp(noisyVisibleRadius, 0.001, 1.2);
+
+                float alpha = 1.0 - smoothstep(noisyVisibleRadius - edgeSoftness, noisyVisibleRadius, sourceRadius);
                 alpha *= smoothstep(0.0, 0.02, openAmount);
 
                 float distortionMask = smoothstep(0.05, 0.4, sourceRadius) * (1.0 - smoothstep(0.9, 1.0, sourceRadius));

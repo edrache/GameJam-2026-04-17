@@ -126,6 +126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82c3cf8278f54de5904934c7f6491499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TSF.PortalAnimator
-  rotationSpeed: 0.5
+  rotationSpeed: 0.2
   initialOpenAmount: 1
   initialGlowIntensity: 2

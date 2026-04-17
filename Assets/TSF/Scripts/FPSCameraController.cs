@@ -22,6 +22,7 @@ namespace TSF
             _playerRoot = transform.parent;
             if (_playerRoot == null)
                 Debug.LogError("[FPSCameraController] Camera must be a child of the Player root.", this);
+            SetCursorLocked(true);
         }
 
         void Update()
