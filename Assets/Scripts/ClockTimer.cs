@@ -1,14 +1,23 @@
+using MoreMountains.Feedbacks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class ClockTimer : MonoBehaviour
 {
     [SerializeField] private RectTransform fillRect;
+    [SerializeField] private Image fillImage;
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private float totalTime = 30f;
     [SerializeField] private float rightStart = 17f;
     [SerializeField] private float rightEnd = -190f;
+    [SerializeField] private float warningTime = 10f;
+    [SerializeField] private Color normalColor = Color.white;
+    [SerializeField] private Color warningColor = Color.red;
+    [SerializeField] private MMF_Player warningFeedback;
+
+    private bool warningTriggered;
 
     public UnityEvent onTimeUp;
 
@@ -40,14 +49,17 @@ public class ClockTimer : MonoBehaviour
 
         SetRight(Mathf.Lerp(rightEnd, rightStart, timeRemaining / totalTime));
         UpdateText();
+        UpdateColor();
     }
 
     public void StartTimer()
     {
         timeRemaining = totalTime;
         running = true;
+        warningTriggered = false;
         SetRight(rightStart);
         UpdateText();
+        UpdateColor();
     }
 
     public void StopTimer() => running = false;
@@ -61,6 +73,20 @@ public class ClockTimer : MonoBehaviour
         int minutes = total / 60;
         int seconds = total % 60;
         timerText.text = $"{minutes}:{seconds:D2}";
+    }
+
+    private void UpdateColor()
+    {
+        if (fillImage == null) return;
+
+        bool isWarning = timeRemaining <= warningTime;
+        fillImage.color = isWarning ? warningColor : normalColor;
+
+        if (isWarning && !warningTriggered)
+        {
+            warningTriggered = true;
+            warningFeedback?.PlayFeedbacks();
+        }
     }
 
     // RectTransform "Right" = -offsetMax.x

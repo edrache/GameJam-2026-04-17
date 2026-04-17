@@ -1064,6 +1064,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &816584166 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8843769124684577345, guid: d251b5079fb17b544b31f07a0c1abfb7, type: 3}
+  m_PrefabInstance: {fileID: 4661369272574743780}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &925789641
 GameObject:
   m_ObjectHideFlags: 0
@@ -1902,6 +1913,42 @@ PrefabInstance:
     - target: {fileID: 2037191282261865461, guid: d251b5079fb17b544b31f07a0c1abfb7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3417378337010592297, guid: d251b5079fb17b544b31f07a0c1abfb7, type: 3}
+      propertyPath: fillImage
+      value: 
+      objectReference: {fileID: 816584166}
+    - target: {fileID: 3417378337010592297, guid: d251b5079fb17b544b31f07a0c1abfb7, type: 3}
+      propertyPath: warningTime
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3417378337010592297, guid: d251b5079fb17b544b31f07a0c1abfb7, type: 3}
+      propertyPath: normalColor.b
+      value: 0.4901961
+      objectReference: {fileID: 0}
+    - target: {fileID: 3417378337010592297, guid: d251b5079fb17b544b31f07a0c1abfb7, type: 3}
+      propertyPath: normalColor.g
+      value: 0.96470594
+      objectReference: {fileID: 0}
+    - target: {fileID: 3417378337010592297, guid: d251b5079fb17b544b31f07a0c1abfb7, type: 3}
+      propertyPath: normalColor.r
+      value: 0.9803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 3417378337010592297, guid: d251b5079fb17b544b31f07a0c1abfb7, type: 3}
+      propertyPath: warningColor.b
+      value: 0.29814878
+      objectReference: {fileID: 0}
+    - target: {fileID: 3417378337010592297, guid: d251b5079fb17b544b31f07a0c1abfb7, type: 3}
+      propertyPath: warningColor.g
+      value: 0.432885
+      objectReference: {fileID: 0}
+    - target: {fileID: 3417378337010592297, guid: d251b5079fb17b544b31f07a0c1abfb7, type: 3}
+      propertyPath: warningColor.r
+      value: 0.9433962
+      objectReference: {fileID: 0}
+    - target: {fileID: 3417378337010592297, guid: d251b5079fb17b544b31f07a0c1abfb7, type: 3}
+      propertyPath: warningFeedback
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3664922483806761683, guid: d251b5079fb17b544b31f07a0c1abfb7, type: 3}
       propertyPath: m_Name
