@@ -21,8 +21,8 @@ RenderSettings:
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
-  m_AmbientEquatorColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_AmbientGroundColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+  m_AmbientEquatorColor: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 1}
+  m_AmbientGroundColor: {r: 0.5990566, g: 1, b: 0.61157376, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
@@ -362,7 +362,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6994353137688214626, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: requiredExposureTime
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6994353137688214626, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: decayExposureWhenUnlit
@@ -560,7 +560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6994353137688214626, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: requiredExposureTime
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6994353137688214626, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: decayExposureWhenUnlit
@@ -641,7 +641,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6994353137688214626, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: requiredExposureTime
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6994353137688214626, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: decayExposureWhenUnlit
@@ -1103,8 +1103,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 12
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1.5
+  m_Color: {r: 0.9753852, g: 1, b: 0, a: 1}
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1148,7 +1148,7 @@ Light:
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
-  m_UseColorTemperature: 1
+  m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
@@ -1166,13 +1166,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 925789641}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6830127, y: -0.18301266, z: 0.18301266, w: 0.6830127}
-  m_LocalPosition: {x: 0, y: 24, z: 0.0000010952353}
+  m_LocalRotation: {x: 0.1113699, y: -0.8863144, z: 0.28200695, w: 0.35002235}
+  m_LocalPosition: {x: -2.667941, y: 13.845003, z: 10.320855}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 90, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 35.3, y: -136.9, z: 0}
 --- !u!114 &925789644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1272,7 +1272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6994353137688214626, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: requiredExposureTime
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6994353137688214626, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: decayExposureWhenUnlit
@@ -1423,8 +1423,8 @@ Transform:
   m_GameObject: {fileID: 1327484193}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: -20}
-  m_LocalScale: {x: 40, y: 10, z: 0.5}
+  m_LocalPosition: {x: 0, y: 5, z: -20.3}
+  m_LocalScale: {x: 41, y: 10, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1680019230}
@@ -1592,7 +1592,7 @@ Transform:
   m_GameObject: {fileID: 1559416610}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 20, y: 5, z: 0}
+  m_LocalPosition: {x: 20, y: 5, z: -0}
   m_LocalScale: {x: 40, y: 10, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1743,7 +1743,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 5, z: 20}
-  m_LocalScale: {x: 40, y: 10, z: 0.5}
+  m_LocalScale: {x: 41, y: 10, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1680019230}
