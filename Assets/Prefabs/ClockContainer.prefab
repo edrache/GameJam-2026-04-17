@@ -471,8 +471,8 @@ MonoBehaviour:
         ResetShakerValuesAfterShake: 1
         ResetTargetValuesAfterShake: 1
         ShakeSpeed: 20
-        ShakeRange: 0.5
-        ShakeMainDirection: {x: 5, y: 10, z: 0}
+        ShakeRange: 2
+        ShakeMainDirection: {x: 10, y: 20, z: 0}
         RandomizeDirection: 0
         ShakeAltDirection: {x: 0, y: 1, z: 0}
         RandomizeDirectionOnPlay: 0
@@ -632,7 +632,7 @@ MonoBehaviour:
           EnumConditions: 0100010000000000000000000000000000000000000000000000000000000000
         RemapCurveZero: 0
         RemapCurveZeroAlt: 0
-        RemapCurveOne: 1
+        RemapCurveOne: 10
         RemapCurveOneAlt: 1
         AnimateX: 1
         AnimatePositionTweenX:
