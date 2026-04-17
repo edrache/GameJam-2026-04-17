@@ -1,5 +1,51 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!28 &-3170206522461401223
+Texture2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: z__GradientRampTex{"mode":0,"colorKeys":[{"color":{"r":0.5660377740859985,"g":0.06674972921609879,"b":0.1173405796289444,"a":1.0},"time":0.26176851987838747},{"color":{"r":0.501960813999176,"g":0.19607841968536378,"b":0.3416934013366699,"a":1.0},"time":0.3499961793422699},{"color":{"r":0.7372549176216126,"g":0.25882354378700259,"b":0.34099280834198,"a":1.0},"time":0.5264667868614197},{"color":{"r":0.7044024467468262,"g":0.9740617275238037,"b":1.0,"a":1.0},"time":0.994125247001648}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":1.0,"time":1.0}]}
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 4
+  m_Width: 256
+  m_Height: 1
+  m_CompleteImageSize: 1024
+  m_MipsStripped: 0
+  m_TextureFormat: 5
+  m_MipCount: 1
+  m_IsReadable: 1
+  m_IsPreProcessed: 0
+  m_IgnoreMipmapLimit: 1
+  m_MipmapLimitGroupName: 
+  m_StreamingMipmaps: 0
+  m_StreamingMipmapsPriority: 0
+  m_VTOnly: 0
+  m_AlphaIsTransparency: 0
+  m_ImageCount: 1
+  m_TextureDimension: 2
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_LightmapFormat: 0
+  m_ColorSpace: 1
+  m_PlatformBlob: 
+  image data: 1024
+  _typelessdata: ff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111eff90111fff8f1321ff8f1424ff8e1626ff8d1729ff8d192bff8c1a2eff8b1c30ff8a1d33ff8a1f35ff892038ff88223bff87233dff872440ff862642ff852745ff852947ff842a4aff832c4cff822d4fff822f51ff813054ff803256ff813257ff823357ff843357ff853357ff863457ff883457ff893457ff8a3557ff8c3557ff8d3557ff8e3657ff903657ff913757ff923757ff943757ff953857ff963857ff983857ff993957ff9a3957ff9c3957ff9d3a57ff9e3a57ffa03a57ffa13b57ffa23b57ffa43c57ffa53c57ffa63c57ffa83d57ffa93d57ffaa3d57ffac3e57ffad3e57ffae3e57ffb03f57ffb13f57ffb23f57ffb44057ffb54057ffb64057ffb84157ffb94157ffba4257ffbc4257ffbc4358ffbc4559ffbc465bffbc485cffbc495effbc4b5fffbc4c60ffbb4e62ffbb4f63ffbb5165ffbb5266ffbb5468ffbb5669ffbb576affbb596cffbb5a6dffbb5c6fffbb5d70ffbb5f71ffbb6073ffbb6274ffba6376ffba6577ffba6678ffba687affba697bffba6b7dffba6c7effba6e7fffba7081ffba7182ffba7384ffba7485ffba7687ffba7788ffb97989ffb97a8bffb97c8cffb97d8effb97f8fffb98090ffb98292ffb98393ffb98595ffb98696ffb98897ffb98a99ffb98b9affb98d9cffb98e9dffb8909effb891a0ffb893a1ffb894a3ffb896a4ffb897a6ffb899a7ffb89aa8ffb89caaffb89dabffb89fadffb8a0aeffb8a2afffb8a4b1ffb7a5b2ffb7a7b4ffb7a8b5ffb7aab6ffb7abb8ffb7adb9ffb7aebbffb7b0bcffb7b1bdffb7b3bfffb7b4c0ffb7b6c2ffb7b7c3ffb7b9c5ffb6bac6ffb6bcc7ffb6bec9ffb6bfcaffb6c1ccffb6c2cdffb6c4ceffb6c5d0ffb6c7d1ffb6c8d3ffb6cad4ffb6cbd5ffb6cdd7ffb6ced8ffb5d0daffb5d1dbffb5d3dcffb5d4deffb5d6dfffb5d8e1ffb5d9e2ffb5dbe4ffb5dce5ffb5dee6ffb5dfe8ffb5e1e9ffb5e2ebffb5e4ecffb5e5edffb4e7efffb4e8f0ffb4eaf2ffb4ebf3ffb4edf4ffb4eef6ffb4f0f7ffb4f2f9ffb4f3faffb4f5fbffb4f6fdffb4f8feffb4f8ffffb4f8ff
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -15,6 +61,7 @@ Material:
   - DR_RIM_ON
   - _DETAILMAPBLENDINGMODE_MULTIPLY
   - _TEXTUREBLENDINGMODE_MULTIPLY
+  - _UNITYSHADOW_OCCLUSION
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -62,7 +109,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GradientRamp:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: -3170206522461401223}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -158,7 +205,7 @@ Material:
     - _Surface: 0
     - _TextureBlendingMode: 0
     - _TextureImpact: 0
-    - _UnityShadowOcclusion: 0
+    - _UnityShadowOcclusion: 1
     - _VertexColorsEnabled: 0
     - _WorkflowMode: 1
     - _XRMotionVectorsPass: 1
