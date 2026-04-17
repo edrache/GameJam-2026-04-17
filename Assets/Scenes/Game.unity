@@ -2323,10 +2323,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 816584166}
     - target: {fileID: 3417378337010592297, guid: d251b5079fb17b544b31f07a0c1abfb7, type: 3}
-      propertyPath: totalTime
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 3417378337010592297, guid: d251b5079fb17b544b31f07a0c1abfb7, type: 3}
       propertyPath: warningTime
       value: 15
       objectReference: {fileID: 0}
