@@ -51,6 +51,7 @@ Shader "TSF/PortalVortex"
             float4 _FlashlightWorldPos;
             float4 _FlashlightWorldDir;
             float _FlashlightCosHalfAngle;
+            float _FlashlightEditorReveal;
 
             struct Attributes
             {
@@ -213,6 +214,7 @@ Shader "TSF/PortalVortex"
                 float flashlightEdgeSoftness = 0.05;
                 float reveal = smoothstep(_FlashlightCosHalfAngle - flashlightEdgeSoftness, _FlashlightCosHalfAngle, cosAngle);
                 reveal *= step(0.0, _FlashlightCosHalfAngle);
+                reveal = max(reveal, saturate(_FlashlightEditorReveal));
 
                 return half4(finalColor, alpha * reveal);
             }

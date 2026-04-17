@@ -5,11 +5,13 @@ namespace TSF
 {
     // Attach to the Camera child of the Player GameObject.
     // Requires a child GameObject named "Flashlight" with a Spot Light.
+    [ExecuteAlways]
     public class FlashlightController : MonoBehaviour
     {
         private static readonly int FlashlightWorldPos = Shader.PropertyToID("_FlashlightWorldPos");
         private static readonly int FlashlightWorldDir = Shader.PropertyToID("_FlashlightWorldDir");
         private static readonly int FlashlightCosHalfAngle = Shader.PropertyToID("_FlashlightCosHalfAngle");
+        private static readonly int FlashlightEditorReveal = Shader.PropertyToID("_FlashlightEditorReveal");
 
         [Header("Flashlight")]
         [SerializeField] private Light flashlight;
@@ -50,7 +52,7 @@ namespace TSF
 
         void Update()
         {
-            if (ReInput.isReady)
+            if (Application.isPlaying && ReInput.isReady)
             {
                 if (!_initialized) Initialize();
 
@@ -63,7 +65,16 @@ namespace TSF
 
         void OnDisable()
         {
+            Shader.SetGlobalFloat(FlashlightEditorReveal, Application.isPlaying ? 0f : 1f);
             Shader.SetGlobalFloat(FlashlightCosHalfAngle, -1f);
+        }
+
+        void OnValidate()
+        {
+            if (flashlight == null)
+                flashlight = GetComponentInChildren<Light>();
+
+            BroadcastFlashlightGlobals();
         }
 
         private void Initialize()
@@ -80,6 +91,8 @@ namespace TSF
 
         private void BroadcastFlashlightGlobals()
         {
+            Shader.SetGlobalFloat(FlashlightEditorReveal, Application.isPlaying ? 0f : 1f);
+
             if (flashlight == null || !flashlight.enabled)
             {
                 Shader.SetGlobalFloat(FlashlightCosHalfAngle, -1f);
