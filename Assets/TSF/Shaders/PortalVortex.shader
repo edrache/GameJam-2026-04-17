@@ -48,6 +48,10 @@ Shader "TSF/PortalVortex"
             TEXTURE2D(_DistortionNoise);
             SAMPLER(sampler_DistortionNoise);
 
+            float4 _FlashlightWorldPos;
+            float4 _FlashlightWorldDir;
+            float _FlashlightCosHalfAngle;
+
             struct Attributes
             {
                 float4 positionOS : POSITION;
@@ -58,6 +62,7 @@ Shader "TSF/PortalVortex"
             {
                 float4 positionHCS : SV_POSITION;
                 float2 uv : TEXCOORD0;
+                float3 positionWS : TEXCOORD1;
             };
 
             CBUFFER_START(UnityPerMaterial)
@@ -151,6 +156,7 @@ Shader "TSF/PortalVortex"
                 Varyings output;
                 output.positionHCS = TransformObjectToHClip(input.positionOS.xyz);
                 output.uv = input.uv;
+                output.positionWS = TransformObjectToWorld(input.positionOS.xyz);
                 return output;
             }
 
@@ -202,7 +208,13 @@ Shader "TSF/PortalVortex"
                 half3 glow = _ColorEdge.rgb * _GlowIntensity * edgeMask;
                 half3 finalColor = baseColor + glow + half3(sparkleDots, sparkleDots, sparkleDots);
 
-                return half4(finalColor, alpha);
+                float3 toFrag = normalize(input.positionWS - _FlashlightWorldPos.xyz);
+                float cosAngle = dot(toFrag, normalize(_FlashlightWorldDir.xyz));
+                float flashlightEdgeSoftness = 0.05;
+                float reveal = smoothstep(_FlashlightCosHalfAngle - flashlightEdgeSoftness, _FlashlightCosHalfAngle, cosAngle);
+                reveal *= step(0.0, _FlashlightCosHalfAngle);
+
+                return half4(finalColor, alpha * reveal);
             }
             ENDHLSL
         }

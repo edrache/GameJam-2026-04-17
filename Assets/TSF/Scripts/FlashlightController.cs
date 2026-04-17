@@ -7,12 +7,15 @@ namespace TSF
     // Requires a child GameObject named "Flashlight" with a Spot Light.
     public class FlashlightController : MonoBehaviour
     {
+        private static readonly int FlashlightWorldPos = Shader.PropertyToID("_FlashlightWorldPos");
+        private static readonly int FlashlightWorldDir = Shader.PropertyToID("_FlashlightWorldDir");
+        private static readonly int FlashlightCosHalfAngle = Shader.PropertyToID("_FlashlightCosHalfAngle");
+
         [Header("Flashlight")]
         [SerializeField] private Light flashlight;
         [SerializeField] private bool onByDefault = true;
 
         [Header("Light Settings")]
-        [SerializeField] private float intensity = 3f;
         [SerializeField] private float range = 15f;
         [SerializeField] [Range(1f, 179f)] private float spotAngle = 45f;
         [SerializeField] private float innerSpotAngle = 20f;
@@ -29,7 +32,7 @@ namespace TSF
             if (flashlight != null)
             {
                 flashlight.type = LightType.Spot;
-                flashlight.intensity = intensity;
+                flashlight.intensity = 0f;
                 flashlight.range = range;
                 flashlight.spotAngle = spotAngle;
                 flashlight.innerSpotAngle = innerSpotAngle;
@@ -41,15 +44,26 @@ namespace TSF
             {
                 Debug.LogWarning("[FlashlightController] No Light found. Add a child GameObject with a Light component.", this);
             }
+
+            BroadcastFlashlightGlobals();
         }
 
         void Update()
         {
-            if (!ReInput.isReady) return;
-            if (!_initialized) Initialize();
+            if (ReInput.isReady)
+            {
+                if (!_initialized) Initialize();
 
-            if (_player.GetButtonDown("Flashlight"))
-                Toggle();
+                if (_player.GetButtonDown("Flashlight"))
+                    Toggle();
+            }
+
+            BroadcastFlashlightGlobals();
+        }
+
+        void OnDisable()
+        {
+            Shader.SetGlobalFloat(FlashlightCosHalfAngle, -1f);
         }
 
         private void Initialize()
@@ -62,6 +76,19 @@ namespace TSF
         {
             if (flashlight != null)
                 flashlight.enabled = !flashlight.enabled;
+        }
+
+        private void BroadcastFlashlightGlobals()
+        {
+            if (flashlight == null || !flashlight.enabled)
+            {
+                Shader.SetGlobalFloat(FlashlightCosHalfAngle, -1f);
+                return;
+            }
+
+            Shader.SetGlobalVector(FlashlightWorldPos, flashlight.transform.position);
+            Shader.SetGlobalVector(FlashlightWorldDir, flashlight.transform.forward.normalized);
+            Shader.SetGlobalFloat(FlashlightCosHalfAngle, Mathf.Cos(spotAngle * 0.5f * Mathf.Deg2Rad));
         }
     }
 }
