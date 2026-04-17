@@ -12,6 +12,7 @@ Shader "TSF/PortalVortex"
         _GlowIntensity ("Glow Intensity", Float) = 2.0
         _EdgeSoftness ("Edge Softness", Range(0.001, 0.5)) = 0.05
         _OpenAmount ("Open Amount", Range(0, 1)) = 1.0
+        [HideInInspector] _PortalPermanentReveal ("Portal Permanent Reveal", Float) = 0.0
         _DistortionNoise ("Distortion Noise", 2D) = "gray" {}
         _DistortionStrength ("Distortion Strength", Range(0, 0.2)) = 0.035
         _DistortionScale ("Distortion Scale", Float) = 2.0
@@ -51,6 +52,7 @@ Shader "TSF/PortalVortex"
             float4 _FlashlightWorldPos;
             float4 _FlashlightWorldDir;
             float _FlashlightCosHalfAngle;
+            float _FlashlightRange;
             float _FlashlightEditorReveal;
 
             struct Attributes
@@ -77,6 +79,7 @@ Shader "TSF/PortalVortex"
                 float _GlowIntensity;
                 float _EdgeSoftness;
                 float _OpenAmount;
+                float _PortalPermanentReveal;
                 float4 _DistortionNoise_ST;
                 float _DistortionStrength;
                 float _DistortionScale;
@@ -209,11 +212,16 @@ Shader "TSF/PortalVortex"
                 half3 glow = _ColorEdge.rgb * _GlowIntensity * edgeMask;
                 half3 finalColor = baseColor + glow + half3(sparkleDots, sparkleDots, sparkleDots);
 
-                float3 toFrag = normalize(input.positionWS - _FlashlightWorldPos.xyz);
+                float3 flashlightToFrag = input.positionWS - _FlashlightWorldPos.xyz;
+                float distanceToFrag = length(flashlightToFrag);
+                float3 toFrag = flashlightToFrag / max(distanceToFrag, 0.0001);
                 float cosAngle = dot(toFrag, normalize(_FlashlightWorldDir.xyz));
                 float flashlightEdgeSoftness = 0.05;
                 float reveal = smoothstep(_FlashlightCosHalfAngle - flashlightEdgeSoftness, _FlashlightCosHalfAngle, cosAngle);
+                float rangeSoftness = max(_FlashlightRange * 0.1, 0.25);
+                reveal *= 1.0 - smoothstep(_FlashlightRange - rangeSoftness, _FlashlightRange, distanceToFrag);
                 reveal *= step(0.0, _FlashlightCosHalfAngle);
+                reveal = max(reveal, saturate(_PortalPermanentReveal));
                 reveal = max(reveal, saturate(_FlashlightEditorReveal));
 
                 return half4(finalColor, alpha * reveal);

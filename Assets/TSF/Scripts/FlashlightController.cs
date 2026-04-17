@@ -11,6 +11,7 @@ namespace TSF
         private static readonly int FlashlightWorldPos = Shader.PropertyToID("_FlashlightWorldPos");
         private static readonly int FlashlightWorldDir = Shader.PropertyToID("_FlashlightWorldDir");
         private static readonly int FlashlightCosHalfAngle = Shader.PropertyToID("_FlashlightCosHalfAngle");
+        private static readonly int FlashlightRange = Shader.PropertyToID("_FlashlightRange");
         private static readonly int FlashlightEditorReveal = Shader.PropertyToID("_FlashlightEditorReveal");
 
         [Header("Flashlight")]
@@ -102,6 +103,7 @@ namespace TSF
             Shader.SetGlobalVector(FlashlightWorldPos, flashlight.transform.position);
             Shader.SetGlobalVector(FlashlightWorldDir, flashlight.transform.forward.normalized);
             Shader.SetGlobalFloat(FlashlightCosHalfAngle, Mathf.Cos(spotAngle * 0.5f * Mathf.Deg2Rad));
+            Shader.SetGlobalFloat(FlashlightRange, Mathf.Max(range, 0.001f));
         }
     }
 }
