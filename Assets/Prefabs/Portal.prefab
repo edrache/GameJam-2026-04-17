@@ -127,5 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TSF.PortalAnimator
   rotationSpeed: 0.2
-  initialOpenAmount: 1
+  initialOpenAmount: 0
   initialGlowIntensity: 2
+  requiredExposureTime: 8
+  decayExposureWhenUnlit: 1

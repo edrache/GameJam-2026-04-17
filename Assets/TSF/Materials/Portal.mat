@@ -25,19 +25,20 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _DistortionNoise:
-        m_Texture: {fileID: 2800000, guid: f1d51ed493a42ad4789ff2be401e8b43, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8fda172b188d7f342ba64c2c53acc2e4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DistortionScale: 2.69
-    - _DistortionSpeedX: 0.44
+    - _DistortionScale: 1
+    - _DistortionSpeedX: 0.05
     - _DistortionSpeedY: 0.05
-    - _DistortionStrength: 0.018
+    - _DistortionStrength: 0
+    - _EdgeNoiseStrength: 0.087
     - _EdgeSoftness: 0.001
-    - _EdgeNoiseStrength: 0.08
     - _GlowIntensity: 2
-    - _OpenAmount: 0.99
+    - _OpenAmount: 0.315
+    - _PortalPermanentReveal: 0
     - _ScrollSpeed: 1.5
     - _SparkleThreshold: 0.21
     - _TwirlOffset: 0

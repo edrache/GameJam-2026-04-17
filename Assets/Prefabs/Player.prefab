@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 2200615968892268906}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.7, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,9 +44,9 @@ Light:
   serializedVersion: 12
   m_Type: 0
   m_Color: {r: 1, g: 0.92156863, b: 0.46666667, a: 1}
-  m_Intensity: 0.1
+  m_Intensity: 0
   m_Range: 30
-  m_SpotAngle: 23.474686
+  m_SpotAngle: 26.1
   m_InnerSpotAngle: 0
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
@@ -173,9 +173,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TSF.FlashlightController
   flashlight: {fileID: 3600191545365786391}
   onByDefault: 1
-  intensity: 0.1
-  range: 30
-  spotAngle: 26.1
+  range: 10
+  spotAngle: 3.3
   innerSpotAngle: 0
   lightColor: {r: 1, g: 0.92156863, b: 0.46666667, a: 1}
 --- !u!1 &7160839348796603607
