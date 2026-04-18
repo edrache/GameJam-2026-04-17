@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ballon
+  m_Name: klepsydra
   m_Shader: {fileID: 4800000, guid: 2a230514c860643f69b6a4d1871d3825, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -46,7 +46,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 5d0c2bf59c6be564b8eaa8e018244bca, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -169,7 +169,7 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _TextureBlendingMode: 0
-    - _TextureImpact: 0
+    - _TextureImpact: 1
     - _UnityShadowOcclusion: 0
     - _VertexColorsEnabled: 0
     - _WorkflowMode: 1
@@ -196,7 +196,7 @@ Texture2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: z__GradientRampTex{"mode":0,"colorKeys":[{"color":{"r":0.12941178679466248,"g":0.3820383548736572,"b":0.4627451002597809,"a":1.0},"time":0.29117265343666079},{"color":{"r":0.12473786622285843,"g":0.673798143863678,"b":0.7484276294708252,"a":1.0},"time":0.3470664620399475},{"color":{"r":0.39248836040496828,"g":0.794429361820221,"b":0.849056601524353,"a":1.0},"time":0.48235294222831728},{"color":{"r":0.6351804733276367,"g":0.8954422473907471,"b":0.9308176040649414,"a":1.0},"time":0.994125247001648}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":1.0,"time":1.0}]}
+  m_Name: z__GradientRampTex{"mode":0,"colorKeys":[{"color":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"time":0.0},{"color":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":1.0,"time":1.0}]}
   m_ImageContentsHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
@@ -230,7 +230,7 @@ Texture2D:
   m_ColorSpace: 1
   m_PlatformBlob: 
   image data: 1024
-  _typelessdata: ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff216176ff21657aff216b7fff217084ff217589ff217a8eff217f93ff208599ff208a9eff208fa3ff2094a8ff209aadff209fb2ff20a4b7ff20a9bcff21acbfff23adc0ff25aec1ff27afc1ff29b0c2ff2bb1c3ff2db2c4ff2fb3c4ff31b3c5ff33b4c6ff35b5c7ff37b6c7ff39b7c8ff3bb8c9ff3db9caff3ebacaff40bbcbff42bbccff44bccdff46bdcdff48beceff4abfcfff4cc0d0ff4ec1d0ff50c2d1ff52c3d2ff54c3d3ff56c4d3ff58c5d4ff5ac6d5ff5cc7d6ff5ec8d6ff60c9d7ff62cad8ff64cbd9ff65cbd9ff65cbd9ff66cbd9ff66cbd9ff66ccd9ff67ccd9ff67ccdaff68ccdaff68ccdaff69cddaff69cddaff6acddaff6acddbff6bcddbff6bcedbff6ccedbff6ccedbff6dcedbff6dcedcff6ecfdcff6ecfdcff6fcfdcff6fcfdcff6fcfdcff70d0ddff70d0ddff71d0ddff71d0ddff72d0ddff72d1ddff73d1ddff73d1deff74d1deff74d1deff75d1deff75d2deff76d2deff76d2dfff77d2dfff77d2dfff78d3dfff78d3dfff78d3dfff79d3e0ff79d3e0ff7ad4e0ff7ad4e0ff7bd4e0ff7bd4e0ff7cd4e0ff7cd5e1ff7dd5e1ff7dd5e1ff7ed5e1ff7ed5e1ff7fd6e1ff7fd6e2ff80d6e2ff80d6e2ff81d6e2ff81d7e2ff81d7e2ff82d7e3ff82d7e3ff83d7e3ff83d8e3ff84d8e3ff84d8e3ff85d8e4ff85d8e4ff86d9e4ff86d9e4ff87d9e4ff87d9e4ff88d9e4ff88dae5ff89dae5ff89dae5ff8adae5ff8adae5ff8adbe5ff8bdbe6ff8bdbe6ff8cdbe6ff8cdbe6ff8ddce6ff8ddce6ff8edce7ff8edce7ff8fdce7ff8fdde7ff90dde7ff90dde7ff91dde8ff91dde8ff92dee8ff92dee8ff93dee8ff93dee8ff94dee8ff94dfe9ff94dfe9ff95dfe9ff95dfe9ff96dfe9ff96e0e9ff97e0eaff97e0eaff98e0eaff98e0eaff99e0eaff99e1eaff9ae1ebff9ae1ebff9be1ebff9be1ebff9ce2ebff9ce2ebff9de2ecff9de2ecff9de2ecff9ee3ecff9ee3ecff9fe3ecff9fe3ecffa0e3edffa0e4edffa1e4edffa1e4edffa2e4edffa2e4edffa2e4ed
+  _typelessdata: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   m_StreamData:
     serializedVersion: 2
     offset: 0

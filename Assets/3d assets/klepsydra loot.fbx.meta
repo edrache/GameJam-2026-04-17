@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 787f22eaa7eb3bf479ae9850a1252907
+guid: 64a76b053654ba0448380490055d5e36
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: balloon
-    second: {fileID: 2100000, guid: 2f8dbcbd3869b4f4398e8b17ebb2976d, type: 2}
+      name: klepsydra
+    second: {fileID: 2100000, guid: 27cb733e2ce57a44696f97ac43a5259f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -36,9 +36,9 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: ballon loot
-      takeName: ballon loot
-      internalID: 2424279750218355572
+      name: klepsydra loot
+      takeName: klepsydra loot
+      internalID: 8650144836384775324
       firstFrame: 2
       lastFrame: 110
       wrapMode: 0
