@@ -47,6 +47,15 @@ namespace TSF
             }
         }
 
+        void LateUpdate()
+        {
+            if (armAnimator == null)
+                return;
+
+            if (armAnimator.GetCurrentAnimatorStateInfo(0).IsName(ArmPortalStateName))
+                armAnimator.SetBool(IsReachingId, true);
+        }
+
         void OnDisable()
         {
             if (_handInPortal)
