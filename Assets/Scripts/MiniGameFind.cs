@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,13 +11,24 @@ public class MiniGameFind : MonoBehaviour
     [Header("Pula sprite'ów do losowania")]
     [SerializeField] private Sprite[] spritePool;
 
+    [Header("Czas wyświetlenia SelectionWrong (sekundy)")]
+    [SerializeField] private float wrongDisplayTime = 0.8f;
+
+    private static readonly HashSet<string> CorrectSpriteNames = new()
+    {
+        "cover_calico",
+        "cover_flamecraft",
+        "cover_wingspan"
+    };
+
     private Image[] outlineImages;
     private Image[] correctImages;
+    private Image[] wrongImages;
 
     private const int MaxSelected = 3;
 
     private int focusedIndex = 0;
-    private readonly System.Collections.Generic.HashSet<int> selectedIndices = new();
+    private readonly HashSet<int> selectedIndices = new();
 
     void Start()
     {
@@ -36,12 +49,14 @@ public class MiniGameFind : MonoBehaviour
     {
         outlineImages = new Image[slots.Length];
         correctImages = new Image[slots.Length];
+        wrongImages   = new Image[slots.Length];
 
         for (int i = 0; i < slots.Length; i++)
         {
             Transform t = slots[i].transform;
             outlineImages[i] = FindChild(t, "SelectionOutline");
             correctImages[i] = FindChild(t, "SelectionCorrect");
+            wrongImages[i]   = FindChild(t, "SelectionWrong");
         }
     }
 
@@ -105,24 +120,41 @@ public class MiniGameFind : MonoBehaviour
 
     // ── Zaznaczenie ──────────────────────────────────────────────
 
+    private bool IsCorrectSlot(int index)
+    {
+        string spriteName = slots[index].sprite?.name;
+        return spriteName != null && CorrectSpriteNames.Contains(spriteName);
+    }
+
     private void Select(int index)
     {
         if (selectedIndices.Contains(index))
         {
             selectedIndices.Remove(index);
-        }
-        else if (selectedIndices.Count < MaxSelected)
-        {
-            selectedIndices.Add(index);
-            OnSlotSelected(index);
+            ApplyVisuals();
+            return;
         }
 
-        ApplyVisuals();
+        if (IsCorrectSlot(index))
+        {
+            if (selectedIndices.Count < MaxSelected)
+            {
+                selectedIndices.Add(index);
+                ApplyVisuals();
+                Debug.Log($"Poprawny slot {index}: {slots[index].sprite?.name}");
+            }
+        }
+        else
+        {
+            StartCoroutine(ShowWrong(index));
+        }
     }
 
-    private void OnSlotSelected(int index)
+    private IEnumerator ShowWrong(int index)
     {
-        Debug.Log($"Zaznaczono slot {index}: {slots[index].sprite?.name}");
+        SetActive(wrongImages[index], true);
+        yield return new WaitForSeconds(wrongDisplayTime);
+        SetActive(wrongImages[index], false);
     }
 
     // ── Wizualizacja ─────────────────────────────────────────────
