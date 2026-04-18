@@ -23,6 +23,10 @@ public class MiniGameFind : MonoBehaviour, IPortalMiniGame
     [SerializeField, Min(0)] private int fallbackLootPoints = 10;
     [SerializeField, Min(0f)] private float removeDuration = 0.25f;
 
+    [Header("Blokada gracza")]
+    [SerializeField, Min(0f)] private float minimumPortalDistance = 0.5f;
+    [SerializeField] private Transform lookTarget;
+
     [Header("Czas wyświetlenia SelectionWrong (sekundy)")]
     [SerializeField] private float wrongDisplayTime = 0.8f;
 
@@ -41,6 +45,9 @@ public class MiniGameFind : MonoBehaviour, IPortalMiniGame
     private const int MaxSelected = 3;
 
     private ArmReachController _reach;
+    private PlayerController _playerController;
+    private FPSCameraController _cameraController;
+    private float _maxPortalDistance;
     private bool _active;
     private bool _completed;
 
@@ -53,10 +60,14 @@ public class MiniGameFind : MonoBehaviour, IPortalMiniGame
     public void OnHandEnter(ArmReachController reach, PortalSide side)
     {
         Debug.Log("[MiniGameFind] OnHandEnter called");
-        _reach     = reach;
-        _active    = true;
-        _completed = false;
+        _reach             = reach;
+        _playerController  = reach.GetComponentInParent<PlayerController>();
+        _cameraController  = _playerController != null ? _playerController.GetComponentInChildren<FPSCameraController>() : null;
+        _maxPortalDistance = GetPlanarDistanceToPlayer();
+        _active            = true;
+        _completed         = false;
         _reach.LockMiniGameExit(this);
+        ApplyPlayerLock();
 
         ResetState();
         SetWindowVisible(true);
@@ -68,14 +79,48 @@ public class MiniGameFind : MonoBehaviour, IPortalMiniGame
     public void OnHandExit()
     {
         _reach?.UnlockMiniGameExit(this);
+        ClearPlayerLock();
         _active = false;
         _reach  = null;
         SetWindowVisible(false);
     }
 
+    void LateUpdate()
+    {
+        if (_active && !_completed)
+            ApplyPlayerLock();
+    }
+
     void OnDisable()
     {
         _reach?.UnlockMiniGameExit(this);
+        ClearPlayerLock();
+    }
+
+    private float GetPlanarDistanceToPlayer()
+    {
+        Transform playerTransform = _playerController != null ? _playerController.transform
+                                  : _reach != null            ? _reach.transform
+                                  : null;
+        if (playerTransform == null) return minimumPortalDistance;
+
+        Vector3 offset = playerTransform.position - transform.position;
+        offset.y = 0f;
+        return Mathf.Max(minimumPortalDistance, offset.magnitude);
+    }
+
+    private void ApplyPlayerLock()
+    {
+        _playerController?.SetDistanceConstraint(this, transform, minimumPortalDistance, _maxPortalDistance);
+        _cameraController?.SetForcedLookAt(this, lookTarget != null ? lookTarget : transform);
+    }
+
+    private void ClearPlayerLock()
+    {
+        _playerController?.ClearDistanceConstraint(this);
+        _cameraController?.ClearForcedLookAt(this);
+        _playerController = null;
+        _cameraController = null;
     }
 
     // ── Inicjalizacja ────────────────────────────────────────────
@@ -235,6 +280,7 @@ public class MiniGameFind : MonoBehaviour, IPortalMiniGame
         SetWindowVisible(false);
         AwardLootScore();
         _reach.UnlockMiniGameExit(this);
+        ClearPlayerLock();
         _reach.TriggerLoot(lootPrefab);
         QueuePortalRemoval();
     }
@@ -282,6 +328,8 @@ public class MiniGameFind : MonoBehaviour, IPortalMiniGame
         if (wrongCount >= 2 && _reach != null)
         {
             SetWindowVisible(false);
+            _reach.UnlockMiniGameExit(this);
+            ClearPlayerLock();
             QueuePortalRemoval();
         }
     }

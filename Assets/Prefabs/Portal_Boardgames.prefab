@@ -692,9 +692,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0ffda4be1b83b694d9bb1babe6c31ac2, type: 3}
   miniGameCanvas: {fileID: 899633965110980125}
   failIconsContainer: {fileID: 1327562338476158909}
-  lootPrefab: {fileID: 0}
+  lootPrefab: {fileID: 8032628955487334654, guid: c318feae26818af47a02a7f7111880c8, type: 3}
   fallbackLootPoints: 10
   removeDuration: 0.25
+  minimumPortalDistance: 0.5
+  lookTarget: {fileID: 0}
   wrongDisplayTime: 0.8
 --- !u!4 &5988896346209908675 stripped
 Transform:
