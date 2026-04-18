@@ -14,6 +14,10 @@ public class MiniGameFind : MonoBehaviour
     [Header("Czas wyświetlenia SelectionWrong (sekundy)")]
     [SerializeField] private float wrongDisplayTime = 0.8f;
 
+    [Header("Kontener ikon błędów")]
+    [SerializeField] private Transform failIconsContainer;
+    [SerializeField] private GameObject miniGameWindow;
+
     private static readonly HashSet<string> CorrectSpriteNames = new()
     {
         "cover_calico",
@@ -24,10 +28,12 @@ public class MiniGameFind : MonoBehaviour
     private Image[] outlineImages;
     private Image[] correctImages;
     private Image[] wrongImages;
+    private Image[] failIcons;
 
     private const int MaxSelected = 3;
 
-    private int focusedIndex = 0;
+    private int focusedIndex  = 0;
+    private int wrongCount    = 0;
     private readonly HashSet<int> selectedIndices = new();
 
     void Start()
@@ -57,6 +63,13 @@ public class MiniGameFind : MonoBehaviour
             outlineImages[i] = FindChild(t, "SelectionOutline");
             correctImages[i] = FindChild(t, "SelectionCorrect");
             wrongImages[i]   = FindChild(t, "SelectionWrong");
+        }
+
+        if (failIconsContainer != null)
+        {
+            failIcons = new Image[failIconsContainer.childCount];
+            for (int i = 0; i < failIcons.Length; i++)
+                failIcons[i] = failIconsContainer.GetChild(i).GetComponent<Image>();
         }
     }
 
@@ -153,8 +166,28 @@ public class MiniGameFind : MonoBehaviour
     private IEnumerator ShowWrong(int index)
     {
         SetActive(wrongImages[index], true);
+
+        if (failIcons != null && wrongCount < failIcons.Length)
+        {
+            Image icon = failIcons[wrongCount];
+            Color c = icon.color;
+            c.a = 1f;
+            icon.color = c;
+        }
+
+        wrongCount++;
+
         yield return new WaitForSeconds(wrongDisplayTime);
         SetActive(wrongImages[index], false);
+
+        if (wrongCount >= 2)
+            EndGame();
+    }
+
+    private void EndGame()
+    {
+        GameObject window = miniGameWindow != null ? miniGameWindow : gameObject;
+        window.SetActive(false);
     }
 
     // ── Wizualizacja ─────────────────────────────────────────────
@@ -200,6 +233,7 @@ public class MiniGameFind : MonoBehaviour
         }
 
         focusedIndex = 0;
+        wrongCount   = 0;
         selectedIndices.Clear();
     }
 
