@@ -605,7 +605,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TSF.PortalTetherSliderMiniGame
   slider: {fileID: 46737687118763132}
   fillDuration: 10
-  lootPrefab: {fileID: 5031858095758830025, guid: 1854723fbec4f44eaa535bfdaa06ce6a, type: 3}
+  lootPrefab: {fileID: 4378342593880410984, guid: ad049629a19f348df80725d8bce0dd8a, type: 3}
   fallbackLootPoints: 30
   removeDuration: 0.25
   minimumPortalDistance: 0.5

@@ -36,6 +36,12 @@ namespace TSF
             }
         }
 
+        public void OnPortalDestroyed(GameObject portal)
+        {
+            _spawnedPortals.Remove(portal);
+            TrySpawnOne();
+        }
+
         public void DespawnAll()
         {
             foreach (var portal in _spawnedPortals)
@@ -61,6 +67,7 @@ namespace TSF
                     GameObject prefab = portalPrefabs[Random.Range(0, portalPrefabs.Length)];
                     GameObject portal = Instantiate(prefab, candidate, Quaternion.Euler(0f, Random.Range(0f, 360f), 0f));
                     _spawnedPortals.Add(portal);
+                    portal.AddComponent<PortalDestroyNotifier>().Init(this);
                     return;
                 }
             }
