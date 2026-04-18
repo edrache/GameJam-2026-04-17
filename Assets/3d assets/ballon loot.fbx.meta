@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 62b189bf62a907b4692b32974dc7aacd
+guid: 787f22eaa7eb3bf479ae9850a1252907
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -7,13 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: obcy
-    second: {fileID: 2100000, guid: 7acb8d45b5782aa4b9d90a1b688181dd, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: text
-    second: {fileID: 2100000, guid: 477d87080e29de744a634b44ee0f8282, type: 2}
+      name: balloon
+    second: {fileID: 2100000, guid: 2f8dbcbd3869b4f4398e8b17ebb2976d, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -39,36 +34,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: obcy loot
-      takeName: obcy loot
-      internalID: -4588212018428746840
-      firstFrame: 2
-      lastFrame: 110
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 0
   meshes:
     lODScreenPercentages: []
