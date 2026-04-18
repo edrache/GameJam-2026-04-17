@@ -14,6 +14,7 @@ namespace TSF
 
         private readonly List<GameObject> _spawnedPortals = new();
         private readonly HashSet<Collider> _zoneColliders = new();
+        private bool _shuttingDown;
 
         void Start()
         {
@@ -38,8 +39,14 @@ namespace TSF
 
         public void OnPortalDestroyed(GameObject portal)
         {
+            if (_shuttingDown) return;
             _spawnedPortals.Remove(portal);
             TrySpawnOne();
+        }
+
+        void OnDestroy()
+        {
+            _shuttingDown = true;
         }
 
         public void DespawnAll()
