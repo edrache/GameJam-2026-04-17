@@ -450,17 +450,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TSF.PortalClippingPlaneController
   clippedRoots:
-  - {fileID: 7258940506146650237}
-  - {fileID: 234022647497226604}
-  - {fileID: 1138910004407791434}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   clippedRoot: {fileID: 0}
   portalPlane: {fileID: 2429378479059592021}
   clippedShader: {fileID: 4800000, guid: 71e6711121a641a5ab46c59666ca1b93, type: 3}
-  clippedColor: {r: 1, g: 0.759434, b: 0.759434, a: 1}
-  gradientTopColor: {r: 0.9254902, g: 0.43529412, b: 0.4862745, a: 1}
-  gradientBottomColor: {r: 0.26415092, g: 0.12833749, b: 0.14720045, a: 1}
-  gradientOffset: -2.64
-  gradientScale: 1
+  clippedColor: {r: 0.9397005, g: 0.7607843, b: 1, a: 1}
+  gradientTopColor: {r: 0.9433962, g: 0.5918476, b: 0.9405839, a: 1}
+  gradientBottomColor: {r: 0.33232844, g: 0.24296905, b: 0.5660378, a: 1}
+  gradientOffset: -1.74
+  gradientScale: 0.92
   outlineColor: {r: 0.08, g: 0.025, b: 0.03, a: 1}
   outlineWidth: 5.25
   autoDetectClipSide: 1
