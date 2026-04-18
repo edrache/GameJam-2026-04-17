@@ -187,7 +187,7 @@ PrefabInstance:
     - target: {fileID: 8126405539331543871, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: frontMiniGame
       value: 
-      objectReference: {fileID: 472204205683313977}
+      objectReference: {fileID: 9146005278136543512}
     m_RemovedComponents:
     - {fileID: 2483765109876543210, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
     m_RemovedGameObjects: []
@@ -199,18 +199,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5720503041697026748, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9146005278136543512}
+    - targetCorrespondingSourceObject: {fileID: 5720503041697026748, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9146005278136543513}
   m_SourcePrefab: {fileID: 100100000, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
---- !u!114 &472204205683313977 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3869073034653985366, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
-  m_PrefabInstance: {fileID: 3691876733480658799}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8961988853221062099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57afa6f9015dc4b76a99733a92a5b4c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TSF.PortalSliderMiniGame
 --- !u!4 &2429378479059592021 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1336105153232077882, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
@@ -237,6 +229,31 @@ MonoBehaviour:
   appearDuration: 0.5
   appearEase: 27
   playOnEnable: 1
+--- !u!114 &9146005278136543513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8961988853221062099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482fc49c8ac44b0d8da1a5d798737c0d, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::TSF.PortalClippingPlaneController
+  clippedRoot: {fileID: 7258940506146650237}
+  portalPlane: {fileID: 2429378479059592021}
+  clippedShader: {fileID: 4800000, guid: 71e6711121a641a5ab46c59666ca1b93, type: 3}
+  clippedColor: {r: 1, g: 0.759434, b: 0.759434, a: 1}
+  gradientTopColor: {r: 0.9254902, g: 0.43529412, b: 0.4862745, a: 1}
+  gradientBottomColor: {r: 0.26415092, g: 0.12833749, b: 0.14720045, a: 1}
+  gradientOffset: -2.64
+  gradientScale: 1
+  outlineColor: {r: 0.08, g: 0.025, b: 0.03, a: 1}
+  outlineWidth: 5.25
+  autoDetectClipSide: 1
+  invertClipSide: 1
+  includeInactiveRenderers: 1
 --- !u!1001 &4455920066938103529
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -325,59 +342,59 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b8d0e52eb476a5345a69d7c2748c67e5, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.4172741
+      value: 0.64645
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b8d0e52eb476a5345a69d7c2748c67e5, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.4172742
+      value: 0.64645
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b8d0e52eb476a5345a69d7c2748c67e5, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.4172741
+      value: 0.64645
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b8d0e52eb476a5345a69d7c2748c67e5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.78914016
+      value: -0.197
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b8d0e52eb476a5345a69d7c2748c67e5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.49610692
+      value: -0.331
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b8d0e52eb476a5345a69d7c2748c67e5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.935349
+      value: 0.132
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b8d0e52eb476a5345a69d7c2748c67e5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.24311443
+      value: 0.13178091
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b8d0e52eb476a5345a69d7c2748c67e5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.71688557
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b8d0e52eb476a5345a69d7c2748c67e5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.6023514
+      value: -0.99127895
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b8d0e52eb476a5345a69d7c2748c67e5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.25326523
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b8d0e52eb476a5345a69d7c2748c67e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -2.491
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b8d0e52eb476a5345a69d7c2748c67e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 221.043
+      value: -164.855
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b8d0e52eb476a5345a69d7c2748c67e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 98.991
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b8d0e52eb476a5345a69d7c2748c67e5, type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8379543107100794045, guid: b8d0e52eb476a5345a69d7c2748c67e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

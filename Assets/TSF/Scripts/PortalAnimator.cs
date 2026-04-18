@@ -43,6 +43,8 @@ namespace TSF
             set => rotationSpeed = value;
         }
 
+        public bool IsFullyOpen => Application.isPlaying && !_closing && _permanentlyOpen && _openAmount >= 1f;
+
         private void Awake()
         {
             InitializeRenderer();

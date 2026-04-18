@@ -10,21 +10,29 @@ namespace TSF
         [SerializeField] private Ease appearEase = Ease.OutBack;
         [SerializeField] private bool playOnEnable = true;
 
+        private PortalAnimator _portalAnimator;
         private Tween _appearTween;
         private Vector3 _targetScale;
         private bool _hasTargetScale;
-
-        private Transform Target => targetObject != null ? targetObject : transform;
+        private bool _appeared;
 
         private void Awake()
         {
+            _portalAnimator = GetComponent<PortalAnimator>();
             CaptureTargetScale();
         }
 
         private void OnEnable()
         {
+            _portalAnimator = GetComponent<PortalAnimator>();
+            HideTargetObject();
+            _appeared = false;
+        }
+
+        private void Update()
+        {
             if (playOnEnable)
-                PlayAppearAnimation();
+                TryPlayAppearAnimation();
         }
 
         private void OnDisable()
@@ -43,12 +51,13 @@ namespace TSF
 
         public void PlayAppearAnimation()
         {
-            Transform target = Target;
+            Transform target = targetObject;
             if (target == null)
                 return;
 
             CaptureTargetScale();
             _appearTween?.Kill();
+            _appeared = true;
 
             target.localScale = Vector3.zero;
 
@@ -64,12 +73,34 @@ namespace TSF
                 .SetTarget(this);
         }
 
+        private void TryPlayAppearAnimation()
+        {
+            if (_appeared)
+                return;
+
+            if (_portalAnimator != null && !_portalAnimator.IsFullyOpen)
+                return;
+
+            PlayAppearAnimation();
+        }
+
+        private void HideTargetObject()
+        {
+            Transform target = targetObject;
+            if (target == null)
+                return;
+
+            CaptureTargetScale();
+            _appearTween?.Kill();
+            target.localScale = Vector3.zero;
+        }
+
         private void CaptureTargetScale()
         {
             if (_hasTargetScale)
                 return;
 
-            Transform target = Target;
+            Transform target = targetObject;
             if (target == null)
                 return;
 
