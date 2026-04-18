@@ -7,6 +7,7 @@ namespace TSF
     {
         [SerializeField] private Slider slider;
         [SerializeField] private float fillDuration = 2f;
+        [SerializeField] private GameObject lootPrefab;
 
         private ArmReachController _reach;
         private bool _active;
@@ -38,7 +39,7 @@ namespace TSF
             {
                 _completed = true;
                 slider.gameObject.SetActive(false);
-                _reach.TriggerLoot();
+                _reach.TriggerLoot(lootPrefab);
             }
         }
     }

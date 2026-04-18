@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using Rewired;
 
@@ -8,9 +9,11 @@ namespace TSF
         private static readonly int IsReachingId = Animator.StringToHash("IsReaching");
         private static readonly int LootId = Animator.StringToHash("Loot");
         private const string ArmPortalStateName = "Arm portal";
+        private const string ArmLootStateName = "Arm loot";
 
         [SerializeField] private Animator armAnimator;
         [SerializeField] private float reachDistance = 2f;
+        [SerializeField] private Transform lootPoint;
 
         private Player _player;
         private bool _initialized;
@@ -93,6 +96,23 @@ namespace TSF
         public void TriggerLoot()
         {
             armAnimator.SetTrigger(LootId);
+        }
+
+        public void TriggerLoot(GameObject lootPrefab)
+        {
+            armAnimator.SetTrigger(LootId);
+            if (lootPrefab != null && lootPoint != null)
+                StartCoroutine(SpawnAndDestroyLoot(lootPrefab));
+        }
+
+        private IEnumerator SpawnAndDestroyLoot(GameObject lootPrefab)
+        {
+            yield return new WaitUntil(() => armAnimator.GetCurrentAnimatorStateInfo(0).IsName(ArmLootStateName));
+            GameObject instance = Instantiate(lootPrefab, lootPoint);
+            instance.transform.localPosition = Vector3.zero;
+            instance.transform.localRotation = Quaternion.identity;
+            yield return new WaitUntil(() => !armAnimator.GetCurrentAnimatorStateInfo(0).IsName(ArmLootStateName));
+            Destroy(instance);
         }
     }
 }

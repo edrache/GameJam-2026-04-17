@@ -240,6 +240,14 @@ PrefabInstance:
       propertyPath: slider
       value: 
       objectReference: {fileID: 737869474}
+    - target: {fileID: 3869073034653985366, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
+      propertyPath: lootPrefab
+      value: 
+      objectReference: {fileID: 5031858095758830025, guid: 1854723fbec4f44eaa535bfdaa06ce6a, type: 3}
+    - target: {fileID: 3869073034653985366, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
+      propertyPath: fillDuration
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5720503041697026748, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: m_Name
       value: Portal
