@@ -44,12 +44,12 @@ Material:
     - _TwirlOffset: 0
     - _TwirlStrength: 3.48
     m_Colors:
-    - _BackColorCenter: {r: 0.050980393, g: 0.019607846, b: 0.02437342, a: 1}
-    - _BackColorEdge: {r: 2, g: 0.69592065, b: 0.45026168, a: 1}
-    - _BackColorMid: {r: 0.8, g: 0.14901958, b: 0.19597338, a: 1}
+    - _BackColorCenter: {r: 0.49860266, g: 0.19339621, b: 1, a: 1}
+    - _BackColorEdge: {r: 2, g: 0.45026168, b: 1.9441795, a: 1}
+    - _BackColorMid: {r: 0.38263273, g: 0, b: 1, a: 1}
     - _BackFaceColor: {r: 0.9716981, g: 0.027690787, b: 0, a: 1}
-    - _ColorCenter: {r: 0.02, g: 0.05, b: 0.02, a: 1}
-    - _ColorEdge: {r: 0.5, g: 2, b: 0.5, a: 1}
-    - _ColorMid: {r: 0.1, g: 0.6, b: 0.15, a: 1}
+    - _ColorCenter: {r: 0, g: 0.950222, b: 1, a: 1}
+    - _ColorEdge: {r: 0.647696, g: 1.9130118, b: 1.9900227, a: 1}
+    - _ColorMid: {r: 0, g: 0.21077824, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
