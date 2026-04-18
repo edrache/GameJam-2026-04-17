@@ -248,6 +248,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3869073034653985366, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
+      propertyPath: completionFeedback
+      value: 
+      objectReference: {fileID: 234789485}
     - target: {fileID: 5720503041697026748, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: m_Name
       value: Portal
@@ -357,54 +361,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
---- !u!1 &234789482
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 234789484}
-  - component: {fileID: 234789483}
-  m_Layer: 0
-  m_Name: MMSoundManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &234789483
+--- !u!114 &234789485 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 9153399990109773467, guid: 5bfd6080f1ff45f4fb23ab2ecc863976, type: 3}
+  m_PrefabInstance: {fileID: 4581101673644775733}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 234789482}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 614edb33c38bcf949846d5675f29f9fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 6da43522623d4704e979466dc7650b65, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: MoreMountains.Tools::MoreMountains.Tools.MMSoundManager
-  AutomaticallyUnparentOnAwake: 1
-  settingsSo: {fileID: 11400000, guid: 07ea3ff88e1ecb84d91f58aa804badc6, type: 2}
-  AudioSourcePoolSize: 10
-  PoolCanExpand: 1
---- !u!4 &234789484
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 234789482}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_EditorClassIdentifier: MoreMountains.Tools::MoreMountains.Feedbacks.MMF_Player
 --- !u!1001 &253143022
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1568,6 +1535,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvasMain
       objectReference: {fileID: 0}
+    - target: {fileID: 3064227533881911443, guid: 89e9ff96402f04c5b94f88484a51a3c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3494791435833736611, guid: 89e9ff96402f04c5b94f88484a51a3c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978594215562440809, guid: 89e9ff96402f04c5b94f88484a51a3c9, type: 3}
+      propertyPath: totalTime
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 7467184998995390802, guid: 89e9ff96402f04c5b94f88484a51a3c9, type: 3}
       propertyPath: m_Camera
       value: 
@@ -1577,6 +1556,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89e9ff96402f04c5b94f88484a51a3c9, type: 3}
+--- !u!1001 &4581101673644775733
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2637290487413747438, guid: 5bfd6080f1ff45f4fb23ab2ecc863976, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2637290487413747438, guid: 5bfd6080f1ff45f4fb23ab2ecc863976, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2637290487413747438, guid: 5bfd6080f1ff45f4fb23ab2ecc863976, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2637290487413747438, guid: 5bfd6080f1ff45f4fb23ab2ecc863976, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2637290487413747438, guid: 5bfd6080f1ff45f4fb23ab2ecc863976, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2637290487413747438, guid: 5bfd6080f1ff45f4fb23ab2ecc863976, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2637290487413747438, guid: 5bfd6080f1ff45f4fb23ab2ecc863976, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2637290487413747438, guid: 5bfd6080f1ff45f4fb23ab2ecc863976, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2637290487413747438, guid: 5bfd6080f1ff45f4fb23ab2ecc863976, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2637290487413747438, guid: 5bfd6080f1ff45f4fb23ab2ecc863976, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9221876217883556087, guid: 5bfd6080f1ff45f4fb23ab2ecc863976, type: 3}
+      propertyPath: m_Name
+      value: MMSoundManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5bfd6080f1ff45f4fb23ab2ecc863976, type: 3}
 --- !u!1001 &7049185372190005903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1653,5 +1689,5 @@ SceneRoots:
   - {fileID: 1360659962}
   - {fileID: 2096817794}
   - {fileID: 853084153}
-  - {fileID: 234789484}
+  - {fileID: 4581101673644775733}
   - {fileID: 1908762217}
