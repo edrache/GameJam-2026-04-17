@@ -21,6 +21,10 @@ namespace TSF
         private float _moveV;
         private bool _jumpPressed;
         private bool _sprinting;
+        private Object _distanceConstraintOwner;
+        private Transform _distanceConstraintTarget;
+        private float _minDistanceConstraint;
+        private float _maxDistanceConstraint;
 
         void Awake()
         {
@@ -34,6 +38,7 @@ namespace TSF
 
             GetInput();
             Move();
+            ApplyDistanceConstraint();
         }
 
         private void Initialize()
@@ -67,6 +72,59 @@ namespace TSF
                 _velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
 
             _cc.Move(_velocity * Time.deltaTime);
+        }
+
+        public void SetDistanceConstraint(Object owner, Transform target, float minDistance, float maxDistance)
+        {
+            if (owner == null || target == null)
+                return;
+
+            _distanceConstraintOwner = owner;
+            _distanceConstraintTarget = target;
+            _minDistanceConstraint = Mathf.Max(0f, minDistance);
+            _maxDistanceConstraint = Mathf.Max(_minDistanceConstraint, maxDistance);
+            ApplyDistanceConstraint();
+        }
+
+        public void ClearDistanceConstraint(Object owner)
+        {
+            if (_distanceConstraintOwner != owner)
+                return;
+
+            _distanceConstraintOwner = null;
+            _distanceConstraintTarget = null;
+        }
+
+        private void ApplyDistanceConstraint()
+        {
+            if (_distanceConstraintOwner == null || _distanceConstraintTarget == null)
+                return;
+
+            Vector3 playerPosition = transform.position;
+            Vector3 targetPosition = _distanceConstraintTarget.position;
+            Vector3 planarOffset = playerPosition - targetPosition;
+            planarOffset.y = 0f;
+
+            float distance = planarOffset.magnitude;
+            Vector3 direction = distance > 0.001f ? planarOffset / distance : -_distanceConstraintTarget.forward;
+            direction.y = 0f;
+            direction.Normalize();
+
+            float constrainedDistance = Mathf.Clamp(distance, _minDistanceConstraint, _maxDistanceConstraint);
+            if (Mathf.Approximately(distance, constrainedDistance))
+                return;
+
+            Vector3 constrainedPosition = targetPosition + direction * constrainedDistance;
+            constrainedPosition.y = playerPosition.y;
+
+            bool controllerWasEnabled = _cc != null && _cc.enabled;
+            if (controllerWasEnabled)
+                _cc.enabled = false;
+
+            transform.position = constrainedPosition;
+
+            if (controllerWasEnabled)
+                _cc.enabled = true;
         }
     }
 }

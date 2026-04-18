@@ -16,6 +16,8 @@ namespace TSF
         private bool _initialized;
         private Transform _playerRoot;
         private float _pitch;
+        private Object _forcedLookOwner;
+        private Transform _forcedLookTarget;
 
         void Awake()
         {
@@ -33,7 +35,9 @@ namespace TSF
             if (Input.GetKeyDown(KeyCode.Escape))
                 SetCursorLocked(!_cursorLocked);
 
-            if (_cursorLocked)
+            if (_forcedLookTarget != null)
+                ForceLookAtTarget();
+            else if (_cursorLocked)
                 Look();
         }
 
@@ -63,6 +67,45 @@ namespace TSF
 
             _pitch -= lookV * mouseSensitivity * Time.deltaTime;
             _pitch = Mathf.Clamp(_pitch, pitchMin, pitchMax);
+            transform.localRotation = Quaternion.Euler(_pitch, 0f, 0f);
+        }
+
+        public void SetForcedLookAt(Object owner, Transform target)
+        {
+            if (owner == null || target == null)
+                return;
+
+            _forcedLookOwner = owner;
+            _forcedLookTarget = target;
+            ForceLookAtTarget();
+        }
+
+        public void ClearForcedLookAt(Object owner)
+        {
+            if (_forcedLookOwner != owner)
+                return;
+
+            _forcedLookOwner = null;
+            _forcedLookTarget = null;
+        }
+
+        private void ForceLookAtTarget()
+        {
+            if (_playerRoot == null || _forcedLookTarget == null)
+                return;
+
+            Vector3 direction = _forcedLookTarget.position - transform.position;
+            if (direction.sqrMagnitude <= 0.0001f)
+                return;
+
+            Vector3 planarDirection = direction;
+            planarDirection.y = 0f;
+            if (planarDirection.sqrMagnitude > 0.0001f)
+                _playerRoot.rotation = Quaternion.LookRotation(planarDirection.normalized, Vector3.up);
+
+            Vector3 localDirection = _playerRoot.InverseTransformDirection(direction.normalized);
+            float targetPitch = -Mathf.Atan2(localDirection.y, new Vector2(localDirection.x, localDirection.z).magnitude) * Mathf.Rad2Deg;
+            _pitch = Mathf.Clamp(targetPitch, pitchMin, pitchMax);
             transform.localRotation = Quaternion.Euler(_pitch, 0f, 0f);
         }
     }

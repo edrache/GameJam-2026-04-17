@@ -1,5 +1,4 @@
 using System.Collections;
-using DG.Tweening;
 using UnityEngine;
 using Rewired;
 
@@ -22,6 +21,7 @@ namespace TSF
         private bool _handInPortal;
         private bool _suppressPortalEnterUntilExit;
         private IPortalMiniGame _activeMiniGame;
+        private PortalAnimator _activePortal;
 
         void Update()
         {
@@ -72,8 +72,9 @@ namespace TSF
         {
             if (_activeMiniGame == null)
                 return FindPortalInReach() != null;
-            var portal = (_activeMiniGame as MonoBehaviour)?.transform;
-            return portal != null && Vector3.Distance(transform.position, portal.position) <= reachDistance;
+
+            Transform portalTransform = _activePortal != null ? _activePortal.transform : (_activeMiniGame as MonoBehaviour)?.transform;
+            return portalTransform != null && Vector3.Distance(transform.position, portalTransform.position) <= reachDistance;
         }
 
         private PortalAnimator FindPortalInReach()
@@ -98,8 +99,11 @@ namespace TSF
             _handInPortal = true;
             PortalAnimator portal = FindPortalInReach();
             if (portal == null) return;
-            _activeMiniGame = portal.GetComponent<IPortalMiniGame>();
-            _activeMiniGame?.OnHandEnter(this);
+
+            PortalSide side = GetPortalSide(portal);
+            _activePortal = portal;
+            _activeMiniGame = GetPortalMiniGame(portal);
+            _activeMiniGame?.OnHandEnter(this, side);
         }
 
         private void OnHandExitPortal()
@@ -107,6 +111,7 @@ namespace TSF
             _handInPortal = false;
             _activeMiniGame?.OnHandExit();
             _activeMiniGame = null;
+            _activePortal = null;
         }
 
         public void TriggerLoot()
@@ -123,12 +128,15 @@ namespace TSF
 
         public void ReleaseMiniGame(IPortalMiniGame miniGame)
         {
-            if (_activeMiniGame != miniGame)
+            PortalSideMiniGameRouter router = _activeMiniGame as PortalSideMiniGameRouter;
+            if (_activeMiniGame != miniGame && (router == null || !router.IsActiveMiniGame(miniGame)))
                 return;
 
+            router?.ClearActiveMiniGame(miniGame);
             _handInPortal = false;
             _suppressPortalEnterUntilExit = true;
             _activeMiniGame = null;
+            _activePortal = null;
         }
 
         public void RemovePortalWhenIdle(IPortalMiniGame miniGame, GameObject portal, float duration)
@@ -159,15 +167,15 @@ namespace TSF
             if (portal == null)
                 yield break;
 
-            portal.transform
-                .DOScale(Vector3.zero, duration)
-                .SetEase(Ease.InBack)
-                .SetTarget(portal)
-                .OnComplete(() =>
-                {
-                    if (portal != null)
-                        Destroy(portal);
-                });
+            PortalAnimator portalAnimator = portal.GetComponent<PortalAnimator>();
+            if (portalAnimator != null)
+                portalAnimator.Close(duration);
+
+            if (duration > 0f)
+                yield return new WaitForSeconds(duration);
+
+            if (portal != null)
+                Destroy(portal);
         }
 
         private bool IsAnimatorInIdleState()
@@ -177,6 +185,22 @@ namespace TSF
 
             AnimatorStateInfo stateInfo = armAnimator.GetCurrentAnimatorStateInfo(0);
             return stateInfo.IsName(idleStateName);
+        }
+
+        private IPortalMiniGame GetPortalMiniGame(PortalAnimator portal)
+        {
+            PortalSideMiniGameRouter router = portal.GetComponent<PortalSideMiniGameRouter>();
+            if (router != null)
+                return router;
+
+            return portal.GetComponent<IPortalMiniGame>();
+        }
+
+        private PortalSide GetPortalSide(PortalAnimator portal)
+        {
+            Vector3 portalToReach = transform.position - portal.transform.position;
+            float facingDot = Vector3.Dot(portal.transform.forward, portalToReach);
+            return facingDot >= 0f ? PortalSide.Front : PortalSide.Back;
         }
     }
 }

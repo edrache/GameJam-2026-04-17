@@ -15,7 +15,7 @@ namespace TSF
         private bool _active;
         private bool _completed;
 
-        public void OnHandEnter(ArmReachController reach)
+        public void OnHandEnter(ArmReachController reach, PortalSide side)
         {
             _reach = reach;
             _active = true;

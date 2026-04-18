@@ -5,6 +5,9 @@ Shader "TSF/PortalVortex"
         [HDR] _ColorCenter ("Center Color", Color) = (0.02, 0.05, 0.02, 1)
         [HDR] _ColorMid ("Mid Color", Color) = (0.1, 0.6, 0.15, 1)
         [HDR] _ColorEdge ("Edge Color", Color) = (0.5, 2.0, 0.5, 1)
+        [HDR] _BackColorCenter ("Back Center Color", Color) = (0.02, 0.03, 0.05, 1)
+        [HDR] _BackColorMid ("Back Mid Color", Color) = (0.15, 0.25, 0.8, 1)
+        [HDR] _BackColorEdge ("Back Edge Color", Color) = (0.45, 0.75, 2.0, 1)
         _TwirlStrength ("Twirl Strength", Float) = 3.0
         _TwirlOffset ("Twirl Offset", Float) = 0.0
         _ScrollSpeed ("Scroll Speed", Float) = 0.3
@@ -72,6 +75,9 @@ Shader "TSF/PortalVortex"
                 half4 _ColorCenter;
                 half4 _ColorMid;
                 half4 _ColorEdge;
+                half4 _BackColorCenter;
+                half4 _BackColorMid;
+                half4 _BackColorEdge;
                 float _TwirlStrength;
                 float _TwirlOffset;
                 float _ScrollSpeed;
@@ -164,8 +170,9 @@ Shader "TSF/PortalVortex"
                 return output;
             }
 
-            half4 frag(Varyings input) : SV_Target
+            half4 frag(Varyings input, FRONT_FACE_TYPE frontFace : FRONT_FACE_SEMANTIC) : SV_Target
             {
+                bool isFrontFace = IS_FRONT_VFACE(frontFace, true, false);
                 float2 uv = input.uv;
                 float2 centeredUv = uv - 0.5;
                 float sourceRadius = length(centeredUv) * 2.0;
@@ -176,13 +183,13 @@ Shader "TSF/PortalVortex"
 
                 float edgeNoise = dot(sampleDistortion(uv, _Time.y * 0.75), float2(0.5, 0.5));
                 float edgeNoiseMask = smoothstep(0.25, 0.9, sourceRadius);
-                float noisyVisibleRadius = visibleRadius + edgeNoise * _EdgeNoiseStrength * openAmount * edgeNoiseMask;
-                noisyVisibleRadius = clamp(noisyVisibleRadius, 0.001, 1.2);
+                float shapeRadius = sourceRadius - edgeNoise * _EdgeNoiseStrength * edgeNoiseMask;
+                float noisyVisibleRadius = clamp(visibleRadius, 0.001, 1.2);
 
-                float alpha = 1.0 - smoothstep(noisyVisibleRadius - edgeSoftness, noisyVisibleRadius, sourceRadius);
+                float alpha = 1.0 - smoothstep(noisyVisibleRadius - edgeSoftness, noisyVisibleRadius, shapeRadius);
                 alpha *= smoothstep(0.0, 0.02, openAmount);
 
-                float distortionMask = smoothstep(0.05, 0.4, sourceRadius) * (1.0 - smoothstep(0.9, 1.0, sourceRadius));
+                float distortionMask = smoothstep(0.05, 0.4, shapeRadius) * (1.0 - smoothstep(0.9, 1.0, shapeRadius));
                 distortionMask *= alpha;
                 float2 distortion = sampleDistortion(uv, _Time.y) * _DistortionStrength * distortionMask;
                 float2 distortedUv = uv + distortion;
@@ -198,8 +205,12 @@ Shader "TSF/PortalVortex"
                 noiseValue += valueNoise(polarUv * 2.0 + float2(4.7, -2.3)) * 0.5;
                 noiseValue /= 1.5;
 
-                half3 innerGradient = lerp(_ColorCenter.rgb, _ColorMid.rgb, smoothstep(0.0, 0.55, radius));
-                half3 outerGradient = lerp(_ColorMid.rgb, _ColorEdge.rgb, smoothstep(0.35, 1.0, radius));
+                half3 colorCenter = isFrontFace ? _ColorCenter.rgb : _BackColorCenter.rgb;
+                half3 colorMid = isFrontFace ? _ColorMid.rgb : _BackColorMid.rgb;
+                half3 colorEdge = isFrontFace ? _ColorEdge.rgb : _BackColorEdge.rgb;
+
+                half3 innerGradient = lerp(colorCenter, colorMid, smoothstep(0.0, 0.55, radius));
+                half3 outerGradient = lerp(colorMid, colorEdge, smoothstep(0.35, 1.0, radius));
                 half3 baseColor = lerp(innerGradient, outerGradient, smoothstep(0.45, 0.85, radius));
                 baseColor *= lerp(0.75, 1.25, noiseValue);
 
@@ -209,7 +220,7 @@ Shader "TSF/PortalVortex"
                 sparkleDots *= alpha;
 
                 float edgeMask = smoothstep(0.55, 0.7, radius) * (1.0 - smoothstep(0.7, 0.85, radius));
-                half3 glow = _ColorEdge.rgb * _GlowIntensity * edgeMask;
+                half3 glow = colorEdge * _GlowIntensity * edgeMask;
                 half3 finalColor = baseColor + glow + half3(sparkleDots, sparkleDots, sparkleDots);
 
                 float3 flashlightToFrag = input.positionWS - _FlashlightWorldPos.xyz;

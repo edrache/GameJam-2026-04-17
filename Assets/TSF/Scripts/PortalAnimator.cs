@@ -35,6 +35,7 @@ namespace TSF
         private float _glowIntensity;
         private float _exposureTime;
         private bool _permanentlyOpen;
+        private bool _closing;
 
         public float RotationSpeed
         {
@@ -81,6 +82,7 @@ namespace TSF
             {
                 _openAmount = 1f;
                 _glowIntensity = initialGlowIntensity;
+                _closing = false;
                 ApplyFloat(OpenAmountId, _openAmount);
                 ApplyFloat(GlowIntensityId, _glowIntensity);
                 ApplyFloat(PermanentRevealId, 0f);
@@ -91,6 +93,7 @@ namespace TSF
             _glowIntensity = initialGlowIntensity;
             _exposureTime = Mathf.Clamp01(initialOpenAmount) * requiredExposureTime;
             _permanentlyOpen = initialOpenAmount >= 1f;
+            _closing = false;
 
             ApplyFloat(OpenAmountId, _openAmount);
             ApplyFloat(GlowIntensityId, _glowIntensity);
@@ -102,7 +105,7 @@ namespace TSF
             _twirlOffset += rotationSpeed * Time.deltaTime;
             ApplyFloat(TwirlOffsetId, _twirlOffset);
 
-            if (!Application.isPlaying || _permanentlyOpen)
+            if (!Application.isPlaying || _permanentlyOpen || _closing)
                 return;
 
             float flashlightExposure = GetFlashlightExposureAmount();
@@ -123,6 +126,7 @@ namespace TSF
 
         public void Open(float duration = 1f)
         {
+            _closing = false;
             _permanentlyOpen = true;
             _exposureTime = requiredExposureTime;
             ApplyFloat(PermanentRevealId, 1f);
@@ -131,10 +135,15 @@ namespace TSF
 
         public void Close(float duration = 0.5f)
         {
+            _closing = true;
             _permanentlyOpen = false;
             _exposureTime = 0f;
-            ApplyFloat(PermanentRevealId, 0f);
-            TweenOpenAmount(0f, duration);
+            ApplyFloat(PermanentRevealId, duration > 0f ? 1f : 0f);
+            TweenOpenAmount(0f, duration, () =>
+            {
+                _closing = false;
+                ApplyFloat(PermanentRevealId, 0f);
+            });
         }
 
         public void SetIntensity(float value)
@@ -143,7 +152,7 @@ namespace TSF
             ApplyFloat(GlowIntensityId, _glowIntensity);
         }
 
-        private void TweenOpenAmount(float target, float duration)
+        private void TweenOpenAmount(float target, float duration, TweenCallback onComplete = null)
         {
             _openTween?.Kill();
 
@@ -151,6 +160,7 @@ namespace TSF
             {
                 _openAmount = target;
                 ApplyFloat(OpenAmountId, _openAmount);
+                onComplete?.Invoke();
                 return;
             }
 
@@ -162,6 +172,9 @@ namespace TSF
                 }, target, duration)
                 .SetEase(Ease.InOutSine)
                 .SetTarget(this);
+
+            if (onComplete != null)
+                _openTween.OnComplete(onComplete);
         }
 
         private void AddExposure(float deltaTime)
