@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: obcy
     second: {fileID: 2100000, guid: 7acb8d45b5782aa4b9d90a1b688181dd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: text
+    second: {fileID: 2100000, guid: 477d87080e29de744a634b44ee0f8282, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
