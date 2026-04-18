@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Rewired;
+using MoreMountains.Feedbacks;
 
 namespace TSF
 {
@@ -15,6 +16,7 @@ namespace TSF
         [SerializeField] private float reachDistance = 2f;
         [SerializeField] private Transform lootPoint;
         [SerializeField] private string idleStateName = "Idle";
+        [SerializeField] private MMF_Player handEnterPortalFeedback;
 
         private Player _player;
         private bool _initialized;
@@ -105,6 +107,8 @@ namespace TSF
             _handInPortal = true;
             PortalAnimator portal = FindPortalInReach();
             if (portal == null) return;
+
+            handEnterPortalFeedback?.PlayFeedbacks();
 
             PortalSide side = GetPortalSide(portal);
             _activePortal = portal;
