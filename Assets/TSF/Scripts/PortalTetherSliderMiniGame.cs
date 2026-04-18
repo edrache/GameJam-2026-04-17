@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,8 @@ namespace TSF
         [SerializeField, Min(0f)] private float removeDuration = 0.25f;
         [SerializeField, Min(0f)] private float minimumPortalDistance = 0.5f;
         [SerializeField] private Transform lookTarget;
+        [SerializeField] private MMF_Player sliderShakeFeedbacks;
+        [SerializeField, Min(0.01f)] private float sliderShakeReplayInterval = 0.1f;
 
         private ArmReachController _reach;
         private PlayerController _playerController;
@@ -20,6 +23,7 @@ namespace TSF
         private float _maxPortalDistance;
         private bool _active;
         private bool _completed;
+        private Coroutine _sliderShakeCoroutine;
 
         public void OnHandEnter(ArmReachController reach, PortalSide side)
         {
@@ -36,10 +40,12 @@ namespace TSF
             _completed = false;
             slider.value = 0f;
             slider.gameObject.SetActive(true);
+            PlaySliderShake();
         }
 
         public void OnHandExit()
         {
+            StopSliderShake();
             _reach?.UnlockMiniGameExit(this);
             ClearPlayerLock();
             _active = false;
@@ -57,6 +63,7 @@ namespace TSF
             {
                 _completed = true;
                 slider.gameObject.SetActive(false);
+                StopSliderShake();
                 AwardLootScore();
                 _reach.UnlockMiniGameExit(this);
                 ClearPlayerLock();
@@ -73,6 +80,7 @@ namespace TSF
 
         private void OnDisable()
         {
+            StopSliderShake();
             _reach?.UnlockMiniGameExit(this);
             ClearPlayerLock();
         }
@@ -101,6 +109,36 @@ namespace TSF
         {
             _playerController?.SetDistanceConstraint(this, transform, minimumPortalDistance, _maxPortalDistance);
             _cameraController?.SetForcedLookAt(this, _activeLookTarget);
+        }
+
+        private void PlaySliderShake()
+        {
+            if (sliderShakeFeedbacks == null || _sliderShakeCoroutine != null)
+                return;
+
+            _sliderShakeCoroutine = StartCoroutine(PlaySliderShakeLoop());
+        }
+
+        private void StopSliderShake()
+        {
+            if (_sliderShakeCoroutine != null)
+            {
+                StopCoroutine(_sliderShakeCoroutine);
+                _sliderShakeCoroutine = null;
+            }
+
+            sliderShakeFeedbacks?.StopFeedbacks();
+        }
+
+        private System.Collections.IEnumerator PlaySliderShakeLoop()
+        {
+            while (_active && !_completed)
+            {
+                sliderShakeFeedbacks.PlayFeedbacks();
+                yield return new WaitForSeconds(sliderShakeReplayInterval);
+            }
+
+            _sliderShakeCoroutine = null;
         }
 
         private void AwardLootScore()
