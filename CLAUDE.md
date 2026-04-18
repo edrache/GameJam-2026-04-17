@@ -41,3 +41,9 @@ Game Jam project (started 2026-04-17). First-person perspective game built in Un
 
 ### Timeline
 - **Unity Timeline 1.8.10** is available for cutscenes and scripted sequences
+
+## Skills
+
+Project-specific skills are in `.claude/skills/`. Claude Code loads them automatically.
+
+- **portal-minigame** — tworzenie nowych mini-gier do portalu; użyj gdy dodajesz interakcję dla mechaniki sięgania ręką
