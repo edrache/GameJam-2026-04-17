@@ -13,6 +13,7 @@ namespace TSF
         [SerializeField, Min(0f)] private float removeDuration = 0.25f;
         [SerializeField, Min(0f)] private float minimumPortalDistance = 0.5f;
         [SerializeField] private Transform lookTarget;
+        [SerializeField] private MMF_Player completionFeedback;
         [SerializeField] private MMF_Player sliderShakeFeedbacks;
         [SerializeField, Min(0.01f)] private float sliderShakeReplayInterval = 0.1f;
 
@@ -64,6 +65,7 @@ namespace TSF
                 _completed = true;
                 slider.gameObject.SetActive(false);
                 StopSliderShake();
+                completionFeedback?.PlayFeedbacks();
                 AwardLootScore();
                 _reach.UnlockMiniGameExit(this);
                 ClearPlayerLock();

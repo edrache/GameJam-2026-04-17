@@ -5416,6 +5416,7 @@ MonoBehaviour:
   lootPrefab: {fileID: 5031858095758830025, guid: 1854723fbec4f44eaa535bfdaa06ce6a, type: 3}
   fallbackLootPoints: 10
   removeDuration: 0.25
+  completionFeedback: {fileID: 9153399990109773467, guid: 5bfd6080f1ff45f4fb23ab2ecc863976, type: 3}
 --- !u!114 &8126405539331543871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5450,6 +5451,7 @@ MonoBehaviour:
   removeDuration: 0.25
   minimumPortalDistance: 0.5
   lookTarget: {fileID: 1336105153232077882}
+  completionFeedback: {fileID: 6247704878920346067}
   sliderShakeFeedbacks: {fileID: 6247704878920346067}
   sliderShakeReplayInterval: 0.1
 --- !u!114 &6247704878920346067

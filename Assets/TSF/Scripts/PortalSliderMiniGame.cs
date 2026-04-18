@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ namespace TSF
         [SerializeField] private GameObject lootPrefab;
         [SerializeField, Min(0)] private int fallbackLootPoints = 10;
         [SerializeField, Min(0f)] private float removeDuration = 0.25f;
+        [SerializeField] private MMF_Player completionFeedback;
 
         private ArmReachController _reach;
         private bool _active;
@@ -41,6 +43,7 @@ namespace TSF
             {
                 _completed = true;
                 slider.gameObject.SetActive(false);
+                completionFeedback?.PlayFeedbacks();
                 AwardLootScore();
                 _reach.TriggerLoot(lootPrefab);
                 QueuePortalRemoval();

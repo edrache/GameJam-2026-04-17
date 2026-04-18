@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TSF;
+using MoreMountains.Feedbacks;
 
 public class MiniGameFind : MonoBehaviour, IPortalMiniGame
 {
@@ -29,6 +30,9 @@ public class MiniGameFind : MonoBehaviour, IPortalMiniGame
 
     [Header("Czas wyświetlenia SelectionWrong (sekundy)")]
     [SerializeField] private float wrongDisplayTime = 0.8f;
+
+    [Header("Feedbacki dźwiękowe")]
+    [SerializeField] private MMF_Player completionFeedback;
 
     private static readonly HashSet<string> CorrectSpriteNames = new()
     {
@@ -278,6 +282,7 @@ public class MiniGameFind : MonoBehaviour, IPortalMiniGame
     {
         _completed = true;
         SetWindowVisible(false);
+        completionFeedback?.PlayFeedbacks();
         AwardLootScore();
         _reach.UnlockMiniGameExit(this);
         ClearPlayerLock();

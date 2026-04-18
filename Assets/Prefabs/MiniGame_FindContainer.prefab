@@ -619,9 +619,15 @@ MonoBehaviour:
   - {fileID: 21300000, guid: edacb70bff0d15d4a877e3108d181915, type: 3}
   - {fileID: 21300000, guid: 15a5626830261bc449d2b204b4a4ee85, type: 3}
   - {fileID: 21300000, guid: 0ffda4be1b83b694d9bb1babe6c31ac2, type: 3}
-  wrongDisplayTime: 0.4
+  miniGameCanvas: {fileID: 0}
   failIconsContainer: {fileID: 3900368441494504799}
-  miniGameWindow: {fileID: 2776093816380883378}
+  lootPrefab: {fileID: 919132149155446097, guid: 787f22eaa7eb3bf479ae9850a1252907, type: 3}
+  fallbackLootPoints: 10
+  removeDuration: 0.25
+  minimumPortalDistance: 0.5
+  lookTarget: {fileID: 0}
+  wrongDisplayTime: 0.4
+  completionFeedback: {fileID: 0}
 --- !u!1 &1683650647637787181
 GameObject:
   m_ObjectHideFlags: 0
