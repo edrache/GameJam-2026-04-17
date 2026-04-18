@@ -391,7 +391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TSF.FlashlightController
   flashlight: {fileID: 3600191545365786391}
   onByDefault: 1
-  range: 5
+  range: 30
   spotAngle: 3.3
   innerSpotAngle: 0
   lightColor: {r: 1, g: 0.92156863, b: 0.46666667, a: 1}

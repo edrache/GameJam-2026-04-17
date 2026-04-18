@@ -40,13 +40,14 @@ namespace TSF
         public void OnPortalDestroyed(GameObject portal)
         {
             if (_shuttingDown) return;
-            _spawnedPortals.Remove(portal);
+            if (!_spawnedPortals.Remove(portal)) return;
             TrySpawnOne();
         }
 
         void OnDestroy()
         {
             _shuttingDown = true;
+            DespawnAll();
         }
 
         public void DespawnAll()
