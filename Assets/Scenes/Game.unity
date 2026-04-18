@@ -129,7 +129,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 433787689584361450, guid: 2597d2960d318489591f2c6149f9d51c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.15999998
+      value: 0.14
       objectReference: {fileID: 0}
     - target: {fileID: 433787689584361450, guid: 2597d2960d318489591f2c6149f9d51c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -137,11 +137,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 433787689584361450, guid: 2597d2960d318489591f2c6149f9d51c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.66
+      value: 10.65
       objectReference: {fileID: 0}
     - target: {fileID: 433787689584361450, guid: 2597d2960d318489591f2c6149f9d51c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.0029222209
+      value: 0.67139035
       objectReference: {fileID: 0}
     - target: {fileID: 433787689584361450, guid: 2597d2960d318489591f2c6149f9d51c, type: 3}
       propertyPath: m_LocalRotation.x
@@ -149,7 +149,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 433787689584361450, guid: 2597d2960d318489591f2c6149f9d51c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.99999577
+      value: -0.74110395
       objectReference: {fileID: 0}
     - target: {fileID: 433787689584361450, guid: 2597d2960d318489591f2c6149f9d51c, type: 3}
       propertyPath: m_LocalRotation.z
@@ -161,15 +161,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 433787689584361450, guid: 2597d2960d318489591f2c6149f9d51c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -180.335
+      value: -95.651
       objectReference: {fileID: 0}
     - target: {fileID: 433787689584361450, guid: 2597d2960d318489591f2c6149f9d51c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6226165907863544083, guid: 2597d2960d318489591f2c6149f9d51c, type: 3}
-      propertyPath: range
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8338843102906098807, guid: 2597d2960d318489591f2c6149f9d51c, type: 3}
       propertyPath: m_AnchorMax.y
@@ -489,36 +485,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6da43522623d4704e979466dc7650b65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MoreMountains.Tools::MoreMountains.Feedbacks.MMF_Player
---- !u!1 &196110291 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7194518917694974565, guid: 100a2d5de6faf417b993dee6e3a28f83, type: 3}
-  m_PrefabInstance: {fileID: 1360659962}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &196110295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 196110291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d57a9bd3704c496cad69d2ff3a21821, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TSF.PortalSpawner
-  portalPrefabs:
-  - {fileID: 5720503041697026748, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
-  spawnZones:
-  - {fileID: 1518536306}
-  - {fileID: 371068931}
-  - {fileID: 621192198}
-  - {fileID: 1831317690}
-  portalCount: 5
-  overlapCheckRadius: 0.6
-  overlapCheckMask:
-    serializedVersion: 2
-    m_Bits: 4294967241
-  maxAttemptsPerPortal: 30
 --- !u!1001 &224509809
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1969,9 +1935,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: edacb70bff0d15d4a877e3108d181915, type: 3}
   - {fileID: 21300000, guid: 15a5626830261bc449d2b204b4a4ee85, type: 3}
   - {fileID: 21300000, guid: 0ffda4be1b83b694d9bb1babe6c31ac2, type: 3}
-  wrongDisplayTime: 0.8
+  miniGameCanvas: {fileID: 0}
   failIconsContainer: {fileID: 0}
-  miniGameWindow: {fileID: 0}
+  lootPrefab: {fileID: 0}
+  fallbackLootPoints: 10
+  removeDuration: 0.25
+  wrongDisplayTime: 0.8
 --- !u!1 &1052883336
 GameObject:
   m_ObjectHideFlags: 0
@@ -2176,6 +2145,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 327531926144767207, guid: 100a2d5de6faf417b993dee6e3a28f83, type: 3}
+      propertyPath: 'spawnZones.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1518536306}
+    - target: {fileID: 327531926144767207, guid: 100a2d5de6faf417b993dee6e3a28f83, type: 3}
+      propertyPath: 'spawnZones.Array.data[1]'
+      value: 
+      objectReference: {fileID: 371068931}
+    - target: {fileID: 327531926144767207, guid: 100a2d5de6faf417b993dee6e3a28f83, type: 3}
+      propertyPath: 'spawnZones.Array.data[2]'
+      value: 
+      objectReference: {fileID: 621192198}
+    - target: {fileID: 327531926144767207, guid: 100a2d5de6faf417b993dee6e3a28f83, type: 3}
+      propertyPath: 'spawnZones.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1831317690}
     - target: {fileID: 5095021167280110781, guid: 100a2d5de6faf417b993dee6e3a28f83, type: 3}
       propertyPath: scoreText
       value: 
@@ -2191,10 +2176,6 @@ PrefabInstance:
     - target: {fileID: 7194518917694974565, guid: 100a2d5de6faf417b993dee6e3a28f83, type: 3}
       propertyPath: m_Name
       value: Manager
-      objectReference: {fileID: 0}
-    - target: {fileID: 7194518917694974565, guid: 100a2d5de6faf417b993dee6e3a28f83, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7897556213285313606, guid: 100a2d5de6faf417b993dee6e3a28f83, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2239,10 +2220,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7194518917694974565, guid: 100a2d5de6faf417b993dee6e3a28f83, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 196110295}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 100a2d5de6faf417b993dee6e3a28f83, type: 3}
 --- !u!1 &1404563201
 GameObject:

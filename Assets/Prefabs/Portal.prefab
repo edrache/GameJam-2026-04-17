@@ -612,6 +612,7 @@ MonoBehaviour:
   minimumPortalDistance: 0.5
   lookTarget: {fileID: 1336105153232077882}
   sliderShakeFeedbacks: {fileID: 6247704878920346067}
+  sliderShakeReplayInterval: 0.1
 --- !u!114 &6247704878920346067
 MonoBehaviour:
   m_ObjectHideFlags: 0
