@@ -29,6 +29,7 @@ namespace TSF
 
             _maxPortalDistance = GetPlanarDistanceToPlayer();
             _activeLookTarget = lookTarget != null ? lookTarget : transform;
+            _reach.LockMiniGameExit(this);
             ApplyPlayerLock();
 
             _active = true;
@@ -39,6 +40,7 @@ namespace TSF
 
         public void OnHandExit()
         {
+            _reach?.UnlockMiniGameExit(this);
             ClearPlayerLock();
             _active = false;
             _reach = null;
@@ -56,6 +58,7 @@ namespace TSF
                 _completed = true;
                 slider.gameObject.SetActive(false);
                 AwardLootScore();
+                _reach.UnlockMiniGameExit(this);
                 ClearPlayerLock();
                 _reach.TriggerLoot(lootPrefab);
                 QueuePortalRemoval();
@@ -70,6 +73,7 @@ namespace TSF
 
         private void OnDisable()
         {
+            _reach?.UnlockMiniGameExit(this);
             ClearPlayerLock();
         }
 

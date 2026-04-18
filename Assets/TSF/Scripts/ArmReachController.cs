@@ -21,6 +21,7 @@ namespace TSF
         private bool _handInPortal;
         private bool _suppressPortalEnterUntilExit;
         private IPortalMiniGame _activeMiniGame;
+        private IPortalMiniGame _exitLockedMiniGame;
         private PortalAnimator _activePortal;
 
         void Update()
@@ -31,7 +32,10 @@ namespace TSF
 
             bool reaching = _player.GetButton("Reach");
 
-            if (_handInPortal && !IsPortalInReach())
+            bool exitLocked = IsMiniGameExitLocked();
+            if (exitLocked)
+                reaching = true;
+            else if (_handInPortal && !IsPortalInReach())
                 reaching = false;
 
             armAnimator.SetBool(IsReachingId, reaching);
@@ -42,7 +46,7 @@ namespace TSF
             else if (!inPortal)
             {
                 _suppressPortalEnterUntilExit = false;
-                if (_handInPortal)
+                if (_handInPortal && !exitLocked)
                     OnHandExitPortal();
             }
         }
@@ -52,7 +56,9 @@ namespace TSF
             if (armAnimator == null)
                 return;
 
-            if (armAnimator.GetCurrentAnimatorStateInfo(0).IsName(ArmPortalStateName))
+            if (_handInPortal && IsMiniGameExitLocked())
+                armAnimator.SetBool(IsReachingId, true);
+            else if (armAnimator.GetCurrentAnimatorStateInfo(0).IsName(ArmPortalStateName))
                 armAnimator.SetBool(IsReachingId, true);
         }
 
@@ -110,6 +116,7 @@ namespace TSF
         {
             _handInPortal = false;
             _activeMiniGame?.OnHandExit();
+            _exitLockedMiniGame = null;
             _activeMiniGame = null;
             _activePortal = null;
         }
@@ -128,15 +135,34 @@ namespace TSF
 
         public void ReleaseMiniGame(IPortalMiniGame miniGame)
         {
-            PortalSideMiniGameRouter router = _activeMiniGame as PortalSideMiniGameRouter;
-            if (_activeMiniGame != miniGame && (router == null || !router.IsActiveMiniGame(miniGame)))
+            if (!IsActiveOrRoutedMiniGame(miniGame))
                 return;
 
+            PortalSideMiniGameRouter router = _activeMiniGame as PortalSideMiniGameRouter;
             router?.ClearActiveMiniGame(miniGame);
             _handInPortal = false;
             _suppressPortalEnterUntilExit = true;
+            _exitLockedMiniGame = null;
             _activeMiniGame = null;
             _activePortal = null;
+        }
+
+        public bool LockMiniGameExit(IPortalMiniGame miniGame)
+        {
+            if (!IsActiveOrRoutedMiniGame(miniGame))
+                return false;
+
+            _exitLockedMiniGame = miniGame;
+            if (armAnimator != null)
+                armAnimator.SetBool(IsReachingId, true);
+
+            return true;
+        }
+
+        public void UnlockMiniGameExit(IPortalMiniGame miniGame)
+        {
+            if (object.ReferenceEquals(_exitLockedMiniGame, miniGame))
+                _exitLockedMiniGame = null;
         }
 
         public void RemovePortalWhenIdle(IPortalMiniGame miniGame, GameObject portal, float duration)
@@ -201,6 +227,23 @@ namespace TSF
             Vector3 portalToReach = transform.position - portal.transform.position;
             float facingDot = Vector3.Dot(portal.transform.forward, portalToReach);
             return facingDot >= 0f ? PortalSide.Back : PortalSide.Front;
+        }
+
+        private bool IsMiniGameExitLocked()
+        {
+            return _exitLockedMiniGame != null && IsActiveOrRoutedMiniGame(_exitLockedMiniGame);
+        }
+
+        private bool IsActiveOrRoutedMiniGame(IPortalMiniGame miniGame)
+        {
+            if (miniGame == null)
+                return false;
+
+            if (object.ReferenceEquals(_activeMiniGame, miniGame))
+                return true;
+
+            PortalSideMiniGameRouter router = _activeMiniGame as PortalSideMiniGameRouter;
+            return router != null && router.IsActiveMiniGame(miniGame);
         }
     }
 }
