@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using MoreMountains.Feedbacks;
 
 namespace TSF
 {
@@ -9,6 +10,7 @@ namespace TSF
 
         [SerializeField] private TMP_Text scoreText;
         [SerializeField] private string scorePrefix = "Score: ";
+        [SerializeField] private MMF_Player scoreAddedFeedbacks;
 
         private int _score;
 
@@ -42,6 +44,9 @@ namespace TSF
         {
             _score += amount;
             UpdateScoreText();
+
+            if (amount > 0)
+                scoreAddedFeedbacks?.PlayFeedbacks();
         }
 
         public void ResetScore()
