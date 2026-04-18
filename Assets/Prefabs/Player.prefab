@@ -190,6 +190,7 @@ GameObject:
   - component: {fileID: 7768409268424120536}
   - component: {fileID: 6156884897184646880}
   - component: {fileID: 2234453886327822232}
+  - component: {fileID: 641012465664850844}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -335,6 +336,20 @@ MonoBehaviour:
   mouseSensitivity: 100
   pitchMin: -40
   pitchMax: 40
+--- !u!114 &641012465664850844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7160839348796603607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a64c1c0aaee3746778f49c7501cffc0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSF.ArmReachController
+  armAnimator: {fileID: 3772334038356643208}
+  reachDistance: 3
 --- !u!1 &9091333082143435576
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,7 +361,6 @@ GameObject:
   - component: {fileID: 433787689584361450}
   - component: {fileID: 5775091723607534852}
   - component: {fileID: 341110342514246366}
-  - component: {fileID: 1377918103962845288}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -411,20 +425,6 @@ MonoBehaviour:
   sprintSpeed: 10
   jumpHeight: 10
   gravity: -20
---- !u!114 &1377918103962845288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9091333082143435576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a64c1c0aaee3746778f49c7501cffc0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TSF.ArmReachController
-  armAnimator: {fileID: 3772334038356643208}
-  currentPortal: {fileID: 0}
 --- !u!1001 &656885428688985171
 PrefabInstance:
   m_ObjectHideFlags: 0

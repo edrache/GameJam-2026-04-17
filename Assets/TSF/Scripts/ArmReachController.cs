@@ -10,7 +10,7 @@ namespace TSF
         private const string ArmPortalStateName = "Arm portal";
 
         [SerializeField] private Animator armAnimator;
-        [SerializeField] private PortalAnimator currentPortal;
+        [SerializeField] private float reachDistance = 2f;
 
         private Player _player;
         private bool _initialized;
@@ -23,7 +23,12 @@ namespace TSF
             if (!ReInput.isReady) return;
             if (!_initialized) Initialize();
 
-            armAnimator.SetBool(IsReachingId, _player.GetButton("Reach"));
+            bool reaching = _player.GetButton("Reach");
+
+            if (_handInPortal && !IsPortalInReach())
+                reaching = false;
+
+            armAnimator.SetBool(IsReachingId, reaching);
 
             bool inPortal = armAnimator.GetCurrentAnimatorStateInfo(0).IsName(ArmPortalStateName);
             if (inPortal && !_handInPortal)
@@ -44,11 +49,37 @@ namespace TSF
             _initialized = true;
         }
 
+        private bool IsPortalInReach()
+        {
+            if (_activeMiniGame == null)
+                return FindPortalInReach() != null;
+            var portal = (_activeMiniGame as MonoBehaviour)?.transform;
+            return portal != null && Vector3.Distance(transform.position, portal.position) <= reachDistance;
+        }
+
+        private PortalAnimator FindPortalInReach()
+        {
+            PortalAnimator[] portals = FindObjectsByType<PortalAnimator>(FindObjectsSortMode.None);
+            PortalAnimator nearest = null;
+            float nearestDist = reachDistance;
+            foreach (PortalAnimator portal in portals)
+            {
+                float dist = Vector3.Distance(transform.position, portal.transform.position);
+                if (dist < nearestDist)
+                {
+                    nearestDist = dist;
+                    nearest = portal;
+                }
+            }
+            return nearest;
+        }
+
         private void OnHandEnterPortal()
         {
             _handInPortal = true;
-            if (currentPortal == null) return;
-            _activeMiniGame = currentPortal.GetComponent<IPortalMiniGame>();
+            PortalAnimator portal = FindPortalInReach();
+            if (portal == null) return;
+            _activeMiniGame = portal.GetComponent<IPortalMiniGame>();
             _activeMiniGame?.OnHandEnter(this);
         }
 
