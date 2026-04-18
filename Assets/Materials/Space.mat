@@ -148,7 +148,7 @@ Material:
     - _Layer5Distance: 300
     - _Layer5Opacity: 2
     - _Metallic: 0
-    - _NebulaSoftness: 0.58
+    - _NebulaSoftness: 0.38
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _ProceduralStars: 0.45
