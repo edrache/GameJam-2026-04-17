@@ -8,6 +8,8 @@ namespace TSF
         [SerializeField] private Slider slider;
         [SerializeField] private float fillDuration = 2f;
         [SerializeField] private GameObject lootPrefab;
+        [SerializeField, Min(0)] private int fallbackLootPoints = 10;
+        [SerializeField, Min(0f)] private float removeDuration = 0.25f;
 
         private ArmReachController _reach;
         private bool _active;
@@ -39,8 +41,32 @@ namespace TSF
             {
                 _completed = true;
                 slider.gameObject.SetActive(false);
+                AwardLootScore();
                 _reach.TriggerLoot(lootPrefab);
+                QueuePortalRemoval();
             }
+        }
+
+        private void AwardLootScore()
+        {
+            if (lootPrefab == null)
+                return;
+
+            int points = fallbackLootPoints;
+            LootScoreValue lootScoreValue = lootPrefab.GetComponentInChildren<LootScoreValue>();
+            if (lootScoreValue != null)
+                points = lootScoreValue.Points;
+
+            ScoreManager scoreManager = ScoreManager.Instance;
+            if (scoreManager != null)
+                scoreManager.AddScore(points);
+        }
+
+        private void QueuePortalRemoval()
+        {
+            _active = false;
+            _reach.RemovePortalWhenIdle(this, gameObject, removeDuration);
+            _reach = null;
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using Rewired;
 
@@ -14,10 +15,12 @@ namespace TSF
         [SerializeField] private Animator armAnimator;
         [SerializeField] private float reachDistance = 2f;
         [SerializeField] private Transform lootPoint;
+        [SerializeField] private string idleStateName = "Idle";
 
         private Player _player;
         private bool _initialized;
         private bool _handInPortal;
+        private bool _suppressPortalEnterUntilExit;
         private IPortalMiniGame _activeMiniGame;
 
         void Update()
@@ -34,10 +37,14 @@ namespace TSF
             armAnimator.SetBool(IsReachingId, reaching);
 
             bool inPortal = armAnimator.GetCurrentAnimatorStateInfo(0).IsName(ArmPortalStateName);
-            if (inPortal && !_handInPortal)
+            if (inPortal && !_handInPortal && !_suppressPortalEnterUntilExit)
                 OnHandEnterPortal();
-            else if (!inPortal && _handInPortal)
-                OnHandExitPortal();
+            else if (!inPortal)
+            {
+                _suppressPortalEnterUntilExit = false;
+                if (_handInPortal)
+                    OnHandExitPortal();
+            }
         }
 
         void OnDisable()
@@ -105,6 +112,28 @@ namespace TSF
                 StartCoroutine(SpawnAndDestroyLoot(lootPrefab));
         }
 
+        public void ReleaseMiniGame(IPortalMiniGame miniGame)
+        {
+            if (_activeMiniGame != miniGame)
+                return;
+
+            _handInPortal = false;
+            _suppressPortalEnterUntilExit = true;
+            _activeMiniGame = null;
+        }
+
+        public void RemovePortalWhenIdle(IPortalMiniGame miniGame, GameObject portal, float duration)
+        {
+            ReleaseMiniGame(miniGame);
+            if (portal == null)
+                return;
+
+            foreach (Collider portalCollider in portal.GetComponents<Collider>())
+                portalCollider.enabled = false;
+
+            StartCoroutine(RemovePortalWhenIdle(portal, duration));
+        }
+
         private IEnumerator SpawnAndDestroyLoot(GameObject lootPrefab)
         {
             yield return new WaitUntil(() => armAnimator.GetCurrentAnimatorStateInfo(0).IsName(ArmLootStateName));
@@ -113,6 +142,32 @@ namespace TSF
             instance.transform.localRotation = Quaternion.identity;
             yield return new WaitUntil(() => !armAnimator.GetCurrentAnimatorStateInfo(0).IsName(ArmLootStateName));
             Destroy(instance);
+        }
+
+        private IEnumerator RemovePortalWhenIdle(GameObject portal, float duration)
+        {
+            yield return new WaitUntil(() => portal == null || IsAnimatorInIdleState());
+            if (portal == null)
+                yield break;
+
+            portal.transform
+                .DOScale(Vector3.zero, duration)
+                .SetEase(Ease.InBack)
+                .SetTarget(portal)
+                .OnComplete(() =>
+                {
+                    if (portal != null)
+                        Destroy(portal);
+                });
+        }
+
+        private bool IsAnimatorInIdleState()
+        {
+            if (armAnimator == null)
+                return true;
+
+            AnimatorStateInfo stateInfo = armAnimator.GetCurrentAnimatorStateInfo(0);
+            return stateInfo.IsName(idleStateName);
         }
     }
 }
