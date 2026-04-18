@@ -16,16 +16,24 @@ public class MiniGameFind : MonoBehaviour
 
     public void Randomize()
     {
-        if (slots == null || slots.Length == 0 || spritePool == null || spritePool.Length == 0)
+        if (slots == null || slots.Length == 0 || spritePool == null || spritePool.Length < slots.Length)
         {
-            Debug.LogWarning("MiniGameFind: przypisz sloty i pulę sprite'ów w Inspectorze.");
+            Debug.LogWarning("MiniGameFind: pula musi mieć co najmniej tyle sprite'ów co slotów.");
             return;
+        }
+
+        // Fisher-Yates shuffle na kopii puli
+        Sprite[] shuffled = (Sprite[])spritePool.Clone();
+        for (int i = shuffled.Length - 1; i > 0; i--)
+        {
+            int j = Random.Range(0, i + 1);
+            (shuffled[i], shuffled[j]) = (shuffled[j], shuffled[i]);
         }
 
         for (int i = 0; i < slots.Length; i++)
         {
-            slots[i].sprite = spritePool[Random.Range(0, spritePool.Length)];
-            slots[i].enabled = slots[i].sprite != null;
+            slots[i].sprite = shuffled[i];
+            slots[i].enabled = true;
         }
     }
 }
