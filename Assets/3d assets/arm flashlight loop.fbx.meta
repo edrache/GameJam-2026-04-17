@@ -8,17 +8,17 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: dlon
-    second: {fileID: 2100000, guid: 96779294f1c4672468c62dbe2827a49f, type: 2}
+    second: {fileID: 2100000, guid: 30fc5c8912f9e7a409e4fb052b9f98e0, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: rekawek
-    second: {fileID: 2100000, guid: cc3bcfe3ca51b474c9dc76e012521ea9, type: 2}
+    second: {fileID: 2100000, guid: 8ff33a179faa24e4aa12ff92faf410a7, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: ubranie
-    second: {fileID: 2100000, guid: 64d260a7333f1f94b98f57020430f809, type: 2}
+    second: {fileID: 2100000, guid: 7214225f95ebcc94abf1e10547e04f1b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
