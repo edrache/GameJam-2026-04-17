@@ -314,6 +314,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6773186821305514070, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 222a4342e96184d9f9c6ea3871231bc4, type: 2}
     - target: {fileID: 8126405539331543871, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: backMiniGame
       value: 
