@@ -214,7 +214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1336105153232077882, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.55
+      value: 3.4
       objectReference: {fileID: 0}
     - target: {fileID: 1336105153232077882, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -250,7 +250,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5720503041697026748, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2101,9 +2101,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: edacb70bff0d15d4a877e3108d181915, type: 3}
   - {fileID: 21300000, guid: 15a5626830261bc449d2b204b4a4ee85, type: 3}
   - {fileID: 21300000, guid: 0ffda4be1b83b694d9bb1babe6c31ac2, type: 3}
-  colorNormal: {r: 1, g: 1, b: 1, a: 1}
-  colorFocused: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  colorSelected: {r: 0, g: 1, b: 0, a: 1}
+  wrongDisplayTime: 0.8
+  failIconsContainer: {fileID: 0}
+  miniGameWindow: {fileID: 0}
 --- !u!1 &1052883336
 GameObject:
   m_ObjectHideFlags: 0
@@ -2944,7 +2944,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6821262833025995238, guid: 89b05e63414c7411d8d4eb21809acb95, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8519607902426862037, guid: 89b05e63414c7411d8d4eb21809acb95, type: 3}
       propertyPath: m_LocalPosition.x

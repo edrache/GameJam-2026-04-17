@@ -56,7 +56,7 @@ Shader "TSF/Layered Space Sky"
             Tags { "LightMode" = "UniversalForward" }
 
             ZWrite On
-            Cull Off
+            Cull Back
 
             HLSLPROGRAM
             #pragma vertex vert
