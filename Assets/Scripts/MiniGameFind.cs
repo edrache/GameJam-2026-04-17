@@ -9,23 +9,51 @@ public class MiniGameFind : MonoBehaviour
     [Header("Pula sprite'ów do losowania")]
     [SerializeField] private Sprite[] spritePool;
 
-    [Header("Kolory stanu")]
-    [SerializeField] private Color colorNormal   = Color.white;
-    [SerializeField] private Color colorFocused  = Color.yellow;
-    [SerializeField] private Color colorSelected = Color.green;
+    private Image[] outlineImages;
+    private Image[] correctImages;
 
-    private int focusedIndex  = 0;
-    private int selectedIndex = -1;
+    private const int MaxSelected = 3;
+
+    private int focusedIndex = 0;
+    private readonly System.Collections.Generic.HashSet<int> selectedIndices = new();
 
     void Start()
     {
+        CacheOverlays();
         Randomize();
-        ApplyColors();
+        ApplyVisuals();
+        DebugLogPositions();
     }
 
     void Update()
     {
         HandleInput();
+    }
+
+    // ── Inicjalizacja overlayów ──────────────────────────────────
+
+    private void CacheOverlays()
+    {
+        outlineImages = new Image[slots.Length];
+        correctImages = new Image[slots.Length];
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            Transform t = slots[i].transform;
+            outlineImages[i] = FindChild(t, "SelectionOutline");
+            correctImages[i] = FindChild(t, "SelectionCorrect");
+        }
+    }
+
+    private Image FindChild(Transform parent, string childName)
+    {
+        Transform child = parent.Find(childName);
+        if (child == null)
+        {
+            Debug.LogWarning($"[MiniGameFind] Brak dziecka '{childName}' w '{parent.name}'.");
+            return null;
+        }
+        return child.GetComponent<Image>();
     }
 
     // ── Nawigacja ────────────────────────────────────────────────
@@ -42,7 +70,7 @@ public class MiniGameFind : MonoBehaviour
         if (next != focusedIndex)
         {
             focusedIndex = next;
-            ApplyColors();
+            ApplyVisuals();
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -79,32 +107,41 @@ public class MiniGameFind : MonoBehaviour
 
     private void Select(int index)
     {
-        selectedIndex = (selectedIndex == index) ? -1 : index;
-        ApplyColors();
+        if (selectedIndices.Contains(index))
+        {
+            selectedIndices.Remove(index);
+        }
+        else if (selectedIndices.Count < MaxSelected)
+        {
+            selectedIndices.Add(index);
+            OnSlotSelected(index);
+        }
 
-        if (selectedIndex >= 0)
-            OnSlotSelected(selectedIndex);
+        ApplyVisuals();
     }
 
-    // Nadpisz lub podłącz event w tej metodzie
     private void OnSlotSelected(int index)
     {
         Debug.Log($"Zaznaczono slot {index}: {slots[index].sprite?.name}");
     }
 
-    // ── Kolory ───────────────────────────────────────────────────
+    // ── Wizualizacja ─────────────────────────────────────────────
 
-    private void ApplyColors()
+    private void ApplyVisuals()
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            if (i == selectedIndex)
-                slots[i].color = colorSelected;
-            else if (i == focusedIndex)
-                slots[i].color = colorFocused;
-            else
-                slots[i].color = colorNormal;
+            bool isFocused  = i == focusedIndex;
+            bool isSelected = selectedIndices.Contains(i);
+
+            SetActive(outlineImages[i], isFocused && !isSelected);
+            SetActive(correctImages[i], isSelected);
         }
+    }
+
+    private void SetActive(Image img, bool active)
+    {
+        if (img != null) img.gameObject.SetActive(active);
     }
 
     // ── Losowanie ────────────────────────────────────────────────
@@ -130,7 +167,16 @@ public class MiniGameFind : MonoBehaviour
             slots[i].enabled = true;
         }
 
-        focusedIndex  = 0;
-        selectedIndex = -1;
+        focusedIndex = 0;
+        selectedIndices.Clear();
+    }
+
+    // ── Debug ────────────────────────────────────────────────────
+
+    [System.Diagnostics.Conditional("UNITY_EDITOR")]
+    private void DebugLogPositions()
+    {
+        for (int i = 0; i < slots.Length; i++)
+            Debug.Log($"[MiniGameFind] Slot {i} '{slots[i].name}': position={slots[i].rectTransform.position}");
     }
 }
