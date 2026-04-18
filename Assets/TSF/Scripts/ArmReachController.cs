@@ -200,7 +200,7 @@ namespace TSF
         {
             Vector3 portalToReach = transform.position - portal.transform.position;
             float facingDot = Vector3.Dot(portal.transform.forward, portalToReach);
-            return facingDot >= 0f ? PortalSide.Front : PortalSide.Back;
+            return facingDot >= 0f ? PortalSide.Back : PortalSide.Front;
         }
     }
 }
