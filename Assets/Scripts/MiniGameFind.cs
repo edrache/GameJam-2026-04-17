@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TSF;
 
-public class MiniGameFind : MonoBehaviour
+public class MiniGameFind : MonoBehaviour, IPortalMiniGame
 {
     [Header("Sloty obrazków (9 Image w canvasie)")]
     [SerializeField] private Image[] slots;
@@ -11,12 +12,19 @@ public class MiniGameFind : MonoBehaviour
     [Header("Pula sprite'ów do losowania")]
     [SerializeField] private Sprite[] spritePool;
 
+    [Header("Okno mini-gry")]
+    [SerializeField] private Canvas miniGameCanvas;
+
+    [Header("Ikony błędów")]
+    [SerializeField] private Transform failIconsContainer;
+
+    [Header("Nagroda")]
+    [SerializeField] private GameObject lootPrefab;
+    [SerializeField, Min(0)] private int fallbackLootPoints = 10;
+    [SerializeField, Min(0f)] private float removeDuration = 0.25f;
+
     [Header("Czas wyświetlenia SelectionWrong (sekundy)")]
     [SerializeField] private float wrongDisplayTime = 0.8f;
-
-    [Header("Kontener ikon błędów")]
-    [SerializeField] private Transform failIconsContainer;
-    [SerializeField] private GameObject miniGameWindow;
 
     private static readonly HashSet<string> CorrectSpriteNames = new()
     {
@@ -32,24 +40,57 @@ public class MiniGameFind : MonoBehaviour
 
     private const int MaxSelected = 3;
 
-    private int focusedIndex  = 0;
-    private int wrongCount    = 0;
+    private ArmReachController _reach;
+    private bool _active;
+    private bool _completed;
+
+    private int focusedIndex = 0;
+    private int wrongCount   = 0;
     private readonly HashSet<int> selectedIndices = new();
 
-    void Start()
+    // ── IPortalMiniGame ──────────────────────────────────────────
+
+    public void OnHandEnter(ArmReachController reach, PortalSide side)
     {
-        CacheOverlays();
+        Debug.Log("[MiniGameFind] OnHandEnter called");
+        _reach     = reach;
+        _active    = true;
+        _completed = false;
+        _reach.LockMiniGameExit(this);
+
+        ResetState();
+        SetWindowVisible(true);
         Randomize();
         ApplyVisuals();
         DebugLogPositions();
     }
 
-    void Update()
+    public void OnHandExit()
     {
-        HandleInput();
+        _reach?.UnlockMiniGameExit(this);
+        _active = false;
+        _reach  = null;
+        SetWindowVisible(false);
     }
 
-    // ── Inicjalizacja overlayów ──────────────────────────────────
+    void OnDisable()
+    {
+        _reach?.UnlockMiniGameExit(this);
+    }
+
+    // ── Inicjalizacja ────────────────────────────────────────────
+
+    void Start()
+    {
+        CacheOverlays();
+        SetWindowVisible(false);
+    }
+
+    private void SetWindowVisible(bool visible)
+    {
+        if (miniGameCanvas != null)
+            miniGameCanvas.enabled = visible;
+    }
 
     private void CacheOverlays()
     {
@@ -84,7 +125,31 @@ public class MiniGameFind : MonoBehaviour
         return child.GetComponent<Image>();
     }
 
-    // ── Nawigacja ────────────────────────────────────────────────
+    private void ResetState()
+    {
+        focusedIndex = 0;
+        wrongCount   = 0;
+        selectedIndices.Clear();
+
+        if (failIcons != null)
+        {
+            foreach (Image icon in failIcons)
+            {
+                if (icon == null) continue;
+                Color c = icon.color;
+                c.a = 0.3f;
+                icon.color = c;
+            }
+        }
+    }
+
+    // ── Input ────────────────────────────────────────────────────
+
+    void Update()
+    {
+        if (!_active || _completed) return;
+        HandleInput();
+    }
 
     private void HandleInput()
     {
@@ -133,11 +198,8 @@ public class MiniGameFind : MonoBehaviour
 
     // ── Zaznaczenie ──────────────────────────────────────────────
 
-    private bool IsCorrectSlot(int index)
-    {
-        string spriteName = slots[index].sprite?.name;
-        return spriteName != null && CorrectSpriteNames.Contains(spriteName);
-    }
+    private bool IsCorrectSlot(int index) =>
+        slots[index].sprite != null && CorrectSpriteNames.Contains(slots[index].sprite.name);
 
     private void Select(int index)
     {
@@ -154,7 +216,9 @@ public class MiniGameFind : MonoBehaviour
             {
                 selectedIndices.Add(index);
                 ApplyVisuals();
-                Debug.Log($"Poprawny slot {index}: {slots[index].sprite?.name}");
+
+                if (selectedIndices.Count == MaxSelected)
+                    OnSuccess();
             }
         }
         else
@@ -162,6 +226,41 @@ public class MiniGameFind : MonoBehaviour
             StartCoroutine(ShowWrong(index));
         }
     }
+
+    // ── Sukces ───────────────────────────────────────────────────
+
+    private void OnSuccess()
+    {
+        _completed = true;
+        SetWindowVisible(false);
+        AwardLootScore();
+        _reach.UnlockMiniGameExit(this);
+        _reach.TriggerLoot(lootPrefab);
+        QueuePortalRemoval();
+    }
+
+    private void AwardLootScore()
+    {
+        if (lootPrefab == null) return;
+
+        int points = fallbackLootPoints;
+        LootScoreValue lootScoreValue = lootPrefab.GetComponentInChildren<LootScoreValue>();
+        if (lootScoreValue != null)
+            points = lootScoreValue.Points;
+
+        ScoreManager scoreManager = ScoreManager.Instance;
+        if (scoreManager != null)
+            scoreManager.AddScore(points);
+    }
+
+    private void QueuePortalRemoval()
+    {
+        _active = false;
+        _reach.RemovePortalWhenIdle(this, transform.root.gameObject, removeDuration);
+        _reach = null;
+    }
+
+    // ── Porażka ──────────────────────────────────────────────────
 
     private IEnumerator ShowWrong(int index)
     {
@@ -180,14 +279,11 @@ public class MiniGameFind : MonoBehaviour
         yield return new WaitForSeconds(wrongDisplayTime);
         SetActive(wrongImages[index], false);
 
-        if (wrongCount >= 2)
-            EndGame();
-    }
-
-    private void EndGame()
-    {
-        GameObject window = miniGameWindow != null ? miniGameWindow : gameObject;
-        window.SetActive(false);
+        if (wrongCount >= 2 && _reach != null)
+        {
+            SetWindowVisible(false);
+            QueuePortalRemoval();
+        }
     }
 
     // ── Wizualizacja ─────────────────────────────────────────────
@@ -211,7 +307,7 @@ public class MiniGameFind : MonoBehaviour
 
     // ── Losowanie ────────────────────────────────────────────────
 
-    public void Randomize()
+    private void Randomize()
     {
         if (slots == null || slots.Length == 0 || spritePool == null || spritePool.Length < slots.Length)
         {
@@ -231,10 +327,6 @@ public class MiniGameFind : MonoBehaviour
             slots[i].sprite = shuffled[i];
             slots[i].enabled = true;
         }
-
-        focusedIndex = 0;
-        wrongCount   = 0;
-        selectedIndices.Clear();
     }
 
     // ── Debug ────────────────────────────────────────────────────

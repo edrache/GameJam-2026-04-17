@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7897556213285313606}
   - component: {fileID: 5616322855424966264}
   - component: {fileID: 5095021167280110781}
+  - component: {fileID: 327531926144767207}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -63,3 +64,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TSF.ScoreManager
   scoreText: {fileID: 0}
   scorePrefix: 'Score: '
+--- !u!114 &327531926144767207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7194518917694974565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d57a9bd3704c496cad69d2ff3a21821, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSF.PortalSpawner
+  portalPrefabs:
+  - {fileID: 5720503041697026748, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
+  - {fileID: 1077863089806434629, guid: 7f866bd27f68ff24e8ff5f5230318331, type: 3}
+  spawnZones:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  portalCount: 5
+  overlapCheckRadius: 0.6
+  overlapCheckMask:
+    serializedVersion: 2
+    m_Bits: 4294967241
+  maxAttemptsPerPortal: 30
