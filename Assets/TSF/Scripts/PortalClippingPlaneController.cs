@@ -16,7 +16,8 @@ namespace TSF
         private static readonly int OutlineColorId = Shader.PropertyToID("_OutlineColor");
         private static readonly int OutlineId = Shader.PropertyToID("_Outline");
 
-        [SerializeField] private Transform clippedRoot;
+        [SerializeField] private Transform[] clippedRoots;
+        [SerializeField, HideInInspector] private Transform clippedRoot;
         [SerializeField] private Transform portalPlane;
         [SerializeField] private Shader clippedShader;
         [SerializeField] private Color clippedColor = Color.white;
@@ -73,13 +74,25 @@ namespace TSF
 
         private void RefreshRenderers()
         {
-            if (clippedRoot == null)
+            if (clippedRoots == null || clippedRoots.Length == 0)
             {
-                _renderers = System.Array.Empty<Renderer>();
-                return;
+                _renderers = clippedRoot != null
+                    ? clippedRoot.GetComponentsInChildren<Renderer>(includeInactiveRenderers)
+                    : System.Array.Empty<Renderer>();
             }
+            else
+            {
+                System.Collections.Generic.List<Renderer> renderers = new System.Collections.Generic.List<Renderer>();
+                foreach (Transform root in clippedRoots)
+                {
+                    if (root == null)
+                        continue;
 
-            _renderers = clippedRoot.GetComponentsInChildren<Renderer>(includeInactiveRenderers);
+                    renderers.AddRange(root.GetComponentsInChildren<Renderer>(includeInactiveRenderers));
+                }
+
+                _renderers = renderers.ToArray();
+            }
         }
 
         private void ApplyClippedShader()
@@ -136,14 +149,29 @@ namespace TSF
         private float GetClipSide()
         {
             float side = 1f;
-            if (autoDetectClipSide && clippedRoot != null && portalPlane != null)
+            Transform sideReference = GetFirstClippedRoot();
+            if (autoDetectClipSide && sideReference != null && portalPlane != null)
             {
-                float detectedSide = Vector3.Dot(clippedRoot.position - portalPlane.position, portalPlane.forward);
+                float detectedSide = Vector3.Dot(sideReference.position - portalPlane.position, portalPlane.forward);
                 if (Mathf.Abs(detectedSide) > 0.001f)
                     side = Mathf.Sign(detectedSide);
             }
 
             return invertClipSide ? -side : side;
+        }
+
+        private Transform GetFirstClippedRoot()
+        {
+            if (clippedRoots == null)
+                return clippedRoot;
+
+            foreach (Transform root in clippedRoots)
+            {
+                if (root != null)
+                    return root;
+            }
+
+            return clippedRoot;
         }
     }
 }
