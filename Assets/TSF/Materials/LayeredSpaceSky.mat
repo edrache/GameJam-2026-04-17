@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: LayeredSpaceSky
+  m_Shader: {fileID: 4800000, guid: 8ef5f5b3a9294c4c8e7b5b929b6d7e41, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Layer1Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 6, y: 6}
+        m_Offset: {x: 0, y: 0}
+    - _Layer2Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 4, y: 4}
+        m_Offset: {x: 0, y: 0}
+    - _Layer3Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 3, y: 3}
+        m_Offset: {x: 0, y: 0}
+    - _Layer4Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 2, y: 2}
+        m_Offset: {x: 0, y: 0}
+    - _Layer5Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1.25, y: 1.25}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _CameraParallaxStrength: 1
+    - _Exposure: 1.35
+    - _InvertParallaxX: 1
+    - _InvertParallaxZ: 0
+    - _Layer1Distance: 35
+    - _Layer1Opacity: 0.45
+    - _Layer2Distance: 70
+    - _Layer2Opacity: 0.35
+    - _Layer3Distance: 140
+    - _Layer3Opacity: 0.3
+    - _Layer4Distance: 280
+    - _Layer4Opacity: 0.25
+    - _Layer5Distance: 560
+    - _Layer5Opacity: 0.22
+    - _NebulaSoftness: 0.45
+    - _ProceduralStars: 0.65
+    m_Colors:
+    - _BaseColor: {r: 0.005, g: 0.007, b: 0.018, a: 1}
+    - _Layer1Scroll: {r: 0.005, g: 0.002, b: 0, a: 0}
+    - _Layer1Tint: {r: 0.55, g: 0.78, b: 1.35, a: 1}
+    - _Layer2Scroll: {r: -0.002, g: 0.004, b: 0, a: 0}
+    - _Layer2Tint: {r: 1, g: 0.65, b: 1.4, a: 1}
+    - _Layer3Scroll: {r: 0.0015, g: -0.002, b: 0, a: 0}
+    - _Layer3Tint: {r: 0.55, g: 1.1, b: 0.95, a: 1}
+    - _Layer4Scroll: {r: -0.001, g: -0.001, b: 0, a: 0}
+    - _Layer4Tint: {r: 1.45, g: 1.1, b: 0.7, a: 1}
+    - _Layer5Scroll: {r: 0.0005, g: 0.001, b: 0, a: 0}
+    - _Layer5Tint: {r: 0.75, g: 0.85, b: 1.65, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
