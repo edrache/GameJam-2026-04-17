@@ -79,6 +79,7 @@ MonoBehaviour:
   portalPrefabs:
   - {fileID: 5720503041697026748, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
   - {fileID: 1077863089806434629, guid: 7f866bd27f68ff24e8ff5f5230318331, type: 3}
+  - {fileID: 8961988853221062099, guid: 74f13a14b3aad4cd6bd2cbcab67113f5, type: 3}
   spawnZones:
   - {fileID: 0}
   - {fileID: 0}
