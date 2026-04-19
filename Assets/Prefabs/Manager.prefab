@@ -75,7 +75,7 @@ MonoBehaviour:
   RandomizeDuration: 0
   RandomDurationMultiplier: {x: 0.5, y: 1.5}
   DisplayFullDurationDetails: 0
-  PlayerTimescaleMode: 0
+  PlayerTimescaleMode: 1
   OnlyPlayIfWithinRange: 0
   RangeCenter: {fileID: 0}
   RangeDistance: 5
@@ -427,6 +427,7 @@ GameObject:
   - component: {fileID: 5095021167280110781}
   - component: {fileID: 327531926144767207}
   - component: {fileID: 6475184480888105826}
+  - component: {fileID: 2278986064349734650}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -536,7 +537,7 @@ MonoBehaviour:
   RandomizeDuration: 0
   RandomDurationMultiplier: {x: 0.5, y: 1.5}
   DisplayFullDurationDetails: 0
-  PlayerTimescaleMode: 0
+  PlayerTimescaleMode: 1
   OnlyPlayIfWithinRange: 0
   RangeCenter: {fileID: 0}
   RangeDistance: 5
@@ -831,3 +832,18 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
+--- !u!114 &2278986064349734650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7194518917694974565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06b7382f34ddd4378816a83ea5baead1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSF.HighScoreServerClient
+  bestScoreUrl: https://edrache.cytr.us/getyourloot/highscore/best.php
+  saveScoreUrl: 'https://edrache.cytr.us/getyourloot/highscore/save.php '
+  logResponses: 1

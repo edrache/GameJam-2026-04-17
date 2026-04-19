@@ -51,10 +51,20 @@ public class ClockTimer : MonoBehaviour
             onTimeUp?.Invoke();
             if (LootAbilityManager.Instance != null && ScoreManager.Instance != null)
                 LootAbilityManager.Instance.ApplyEndGameBonuses(ScoreManager.Instance.Score);
-            bool isNewHighScore = ScoreManager.Instance != null && ScoreManager.Instance.CheckAndSaveHighScore();
             int finalScore = ScoreManager.Instance != null ? ScoreManager.Instance.Score : 0;
-            timesUpWindow?.Show(finalScore, isNewHighScore);
             if (pauseOnTimeUp) Time.timeScale = 0f;
+
+            HighScoreServerClient highScoreServerClient = FindFirstObjectByType<HighScoreServerClient>();
+            if (highScoreServerClient != null)
+                highScoreServerClient.TrySubmitScoreAfterServerCheck(finalScore, (isNewHighScore, serverBestScore) =>
+                {
+                    timesUpWindow?.Show(finalScore, isNewHighScore, serverBestScore);
+                });
+            else
+            {
+                bool isNewHighScore = ScoreManager.Instance != null && ScoreManager.Instance.CheckAndSaveHighScore();
+                timesUpWindow?.Show(finalScore, isNewHighScore);
+            }
             return;
         }
 

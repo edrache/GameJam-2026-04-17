@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Get Your Loot - Best Score</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #f7e9c9;
+      --muted: #c6a66b;
+      --bg: #130f13;
+      --panel: #211822;
+      --line: #6d4a2e;
+      --accent: #f2b13f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background:
+        radial-gradient(circle at 50% -10%, rgba(242, 177, 63, 0.16), transparent 34rem),
+        linear-gradient(180deg, #1b1320 0%, var(--bg) 58%, #0d0a0d 100%);
+      color: var(--ink);
+      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      display: grid;
+      place-items: center;
+      padding: clamp(20px, 5vw, 56px);
+    }
+
+    main {
+      width: min(980px, 100%);
+      text-align: center;
+    }
+
+    .logo {
+      display: block;
+      width: min(100%, 860px);
+      height: auto;
+      margin: 0 auto clamp(28px, 5vw, 48px);
+      filter: drop-shadow(0 20px 24px rgba(0, 0, 0, 0.42));
+    }
+
+    .score-board {
+      border-top: 2px solid var(--line);
+      border-bottom: 2px solid var(--line);
+      background: linear-gradient(90deg, transparent, rgba(33, 24, 34, 0.82), transparent);
+      padding: clamp(22px, 4vw, 34px) 12px clamp(26px, 5vw, 42px);
+    }
+
+    .label {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: clamp(24px, 5vw, 48px);
+      line-height: 1;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-shadow: 0 4px 0 rgba(0, 0, 0, 0.36);
+    }
+
+    .best-score {
+      min-height: 0.9em;
+      margin: 0;
+      color: var(--accent);
+      font-size: clamp(96px, 22vw, 220px);
+      line-height: 0.84;
+      letter-spacing: 0;
+      text-shadow:
+        0 5px 0 #6d2d1f,
+        0 16px 28px rgba(0, 0, 0, 0.45);
+      overflow-wrap: anywhere;
+    }
+
+    .status {
+      min-height: 1.4em;
+      margin: 20px 0 0;
+      color: color-mix(in srgb, var(--muted), var(--ink) 20%);
+      font: 700 15px/1.4 ui-sans-serif, system-ui, sans-serif;
+      letter-spacing: 0;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        align-items: start;
+      }
+
+      .logo {
+        margin-top: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <img class="logo" src="getyourloot.png" alt="Get Your Loot">
+
+    <section class="score-board" aria-label="Best score">
+      <p class="label">Best Score</p>
+      <p class="best-score" id="bestScore">...</p>
+      <p class="status" id="status">Loading...</p>
+    </section>
+  </main>
+
+  <script>
+    const bestScoreElement = document.querySelector("#bestScore");
+    const statusElement = document.querySelector("#status");
+
+    async function loadBestScore() {
+      try {
+        const response = await fetch("highscore/best.php", { cache: "no-store" });
+        if (!response.ok) throw new Error("Could not load score");
+
+        const score = (await response.text()).trim() || "0";
+        bestScoreElement.textContent = score;
+        statusElement.textContent = "";
+      } catch (error) {
+        bestScoreElement.textContent = "-";
+        statusElement.textContent = error.message;
+      }
+    }
+
+    loadBestScore();
+  </script>
+</body>
+</html>

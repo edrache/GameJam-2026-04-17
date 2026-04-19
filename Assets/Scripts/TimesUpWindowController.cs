@@ -41,6 +41,12 @@ public class TimesUpWindowController : MonoBehaviour
 
     public void Show(int score, bool isNewHighScore)
     {
+        int best = ScoreManager.Instance != null ? ScoreManager.Instance.HighScore : score;
+        Show(score, isNewHighScore, best);
+    }
+
+    public void Show(int score, bool isNewHighScore, int bestScore)
+    {
         gameObject.SetActive(true);
         _active = true;
 
@@ -52,10 +58,7 @@ public class TimesUpWindowController : MonoBehaviour
             if (isNewHighScore)
                 highScoreText.text = newHighScoreLabel;
             else
-            {
-                int best = ScoreManager.Instance != null ? ScoreManager.Instance.HighScore : score;
-                highScoreText.text = $"{highScorePrefix}{best}";
-            }
+                highScoreText.text = $"{highScorePrefix}{bestScore}";
         }
 
         if (scoreSummaryText != null)

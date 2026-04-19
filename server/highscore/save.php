@@ -11,15 +11,18 @@ if ($score === false || $score === null || $score < 0) {
     exit;
 }
 
-if (!file_exists($scoreFile)) {
-    file_put_contents($scoreFile, '0', LOCK_EX);
+if (!file_exists($scoreFile) && file_put_contents($scoreFile, '0', LOCK_EX) === false) {
+    http_response_code(500);
+    header('Content-Type: text/plain; charset=utf-8');
+    echo 'storage error: cannot create best-score.txt';
+    exit;
 }
 
 $handle = fopen($scoreFile, 'c+');
 if ($handle === false) {
     http_response_code(500);
     header('Content-Type: text/plain; charset=utf-8');
-    echo 'storage error';
+    echo 'storage error: best-score.txt is not writable';
     exit;
 }
 
