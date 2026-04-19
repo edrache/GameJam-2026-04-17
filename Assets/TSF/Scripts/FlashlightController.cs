@@ -14,6 +14,7 @@ namespace TSF
         private static readonly int FlashlightCosHalfAngle = Shader.PropertyToID("_FlashlightCosHalfAngle");
         private static readonly int FlashlightRange        = Shader.PropertyToID("_FlashlightRange");
         private static readonly int FlashlightEditorReveal = Shader.PropertyToID("_FlashlightEditorReveal");
+        private static readonly int ColorId                = Shader.PropertyToID("_Color");
 
         [Header("Flashlight")]
         [SerializeField] private Light flashlight;
@@ -28,6 +29,7 @@ namespace TSF
         [Header("Cone Visualization")]
         [SerializeField] private bool showCone = true;
         [SerializeField] private Color coneColor = new Color(1f, 0.95f, 0.75f, 0.12f);
+        [SerializeField] private Material coneMaterialTemplate;
         [SerializeField] [Range(4, 48)] private int coneSegments = 20;
 
         private Player _player;
@@ -122,20 +124,34 @@ namespace TSF
             _coneMeshRenderer.receiveShadows           = false;
             _coneMeshRenderer.motionVectorGenerationMode = MotionVectorGenerationMode.ForceNoMotion;
 
-            var shader = Shader.Find("TSF/FlashlightCone");
-            if (shader != null)
+            _coneMaterial = CreateConeMaterial();
+            if (_coneMaterial != null)
             {
-                _coneMaterial       = new Material(shader) { name = "FlashlightConeMat" };
-                _coneMaterial.color = coneColor;
+                _coneMaterial.SetColor(ColorId, coneColor);
                 _coneMeshRenderer.sharedMaterial = _coneMaterial;
             }
             else
             {
-                Debug.LogWarning("[FlashlightController] Shader 'TSF/FlashlightCone' not found.", this);
+                Debug.LogWarning("[FlashlightController] No cone material available. Assign a FlashlightCone material template.", this);
             }
 
             _coneMeshFilter.mesh = BuildConeMesh(coneSegments, range, spotAngle);
             UpdateConeVisibility();
+        }
+
+        private Material CreateConeMaterial()
+        {
+            if (coneMaterialTemplate != null)
+                return new Material(coneMaterialTemplate) { name = "FlashlightConeMat" };
+
+            var shader = Shader.Find("TSF/FlashlightCone");
+            if (shader == null)
+            {
+                Debug.LogWarning("[FlashlightController] Shader 'TSF/FlashlightCone' not found.", this);
+                return null;
+            }
+
+            return new Material(shader) { name = "FlashlightConeMat" };
         }
 
         private void UpdateConeVisibility()

@@ -11657,7 +11657,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3978594215562440809, guid: 89e9ff96402f04c5b94f88484a51a3c9, type: 3}
       propertyPath: totalTime
-      value: 100
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7467184998995390802, guid: 89e9ff96402f04c5b94f88484a51a3c9, type: 3}
       propertyPath: m_Camera

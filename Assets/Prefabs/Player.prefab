@@ -618,6 +618,7 @@ MonoBehaviour:
   lightColor: {r: 1, g: 0.92156863, b: 0.46666667, a: 1}
   showCone: 1
   coneColor: {r: 1, g: 0.95, b: 0.75, a: 0.12}
+  coneMaterialTemplate: {fileID: 2100000, guid: 5b010cb3dfc2427dbe12da53e81130b3, type: 2}
   coneSegments: 20
 --- !u!1 &5102604716007158142
 GameObject:

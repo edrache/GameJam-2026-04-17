@@ -845,5 +845,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TSF.HighScoreServerClient
   bestScoreUrl: https://edrache.cytr.us/getyourloot/highscore/best.php
-  saveScoreUrl: 'https://edrache.cytr.us/getyourloot/highscore/save.php '
+  saveScoreUrl: https://edrache.cytr.us/getyourloot/highscore/save.php
   logResponses: 1

@@ -69,7 +69,7 @@ namespace TSF
             if (serverBestScoreText != null)
                 serverBestScoreText.text = loadingLabel;
 
-            using (UnityWebRequest request = UnityWebRequest.Get(bestScoreUrl))
+            using (UnityWebRequest request = UnityWebRequest.Get(bestScoreUrl.Trim()))
             {
                 request.timeout = requestTimeoutSeconds;
                 yield return request.SendWebRequest();
@@ -149,8 +149,9 @@ namespace TSF
 
         private IEnumerator SendScore(int score, System.Action<int> onSaved)
         {
-            string separator = saveScoreUrl.Contains("?") ? "&" : "?";
-            string url = $"{saveScoreUrl}{separator}score={score}";
+            string trimmedSaveScoreUrl = saveScoreUrl.Trim();
+            string separator = trimmedSaveScoreUrl.Contains("?") ? "&" : "?";
+            string url = $"{trimmedSaveScoreUrl}{separator}score={score}";
 
             using (UnityWebRequest request = UnityWebRequest.Get(url))
             {
