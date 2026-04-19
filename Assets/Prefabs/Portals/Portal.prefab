@@ -5781,17 +5781,24 @@ MonoBehaviour:
   bonusAction: Bonus
   bonusScore: 20
   bonusZones:
-  - start: 0.3
-    end: 0.4
+  - start: 0.1
+    end: 0.13
   - start: 0.4
-    end: 0.5
+    end: 0.43
   bonusMarkersRoot: {fileID: 0}
   bonusMarkerPrefab: {fileID: 5531177118568763241}
   markerRadius: 60
   markersPerZone: 10
+  markerZeroAngle: 90
+  markersClockwise: 1
+  hideMarkerTemplate: 1
   rebuildMarkersOnEnable: 1
   availableMarkerColor: {r: 1, g: 0.82, b: 0.12, a: 1}
   claimedMarkerColor: {r: 0.35, g: 1, b: 0.55, a: 1}
+  debugZeroMarkerColor: {r: 1, g: 0.1, b: 0.1, a: 1}
+  debugQuarterMarkerColor: {r: 1, g: 0.82, b: 0.12, a: 1}
+  debugHalfMarkerColor: {r: 0.35, g: 1, b: 0.55, a: 1}
+  debugThreeQuarterMarkerColor: {r: 0.1, g: 0.7, b: 1, a: 1}
   lootPrefab: {fileID: 5031858095758830025, guid: 1854723fbec4f44eaa535bfdaa06ce6a, type: 3}
   fallbackLootPoints: 10
   removeDuration: 0.25
@@ -5867,7 +5874,7 @@ RectTransform:
   m_Father: {fileID: 8111963282334283167}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

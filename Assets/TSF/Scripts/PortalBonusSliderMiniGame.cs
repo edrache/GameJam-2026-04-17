@@ -2,6 +2,9 @@ using MoreMountains.Feedbacks;
 using Rewired;
 using UnityEngine;
 using UnityEngine.UI;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace TSF
 {
@@ -63,9 +66,17 @@ namespace TSF
         [SerializeField] private RectTransform bonusMarkerPrefab;
         [SerializeField, Min(0f)] private float markerRadius = 80f;
         [SerializeField, Min(2)] private int markersPerZone = 5;
+        [SerializeField] private float markerZeroAngle = 90f;
+        [SerializeField] private bool markersClockwise = true;
+        [SerializeField] private bool invertMarkerY = true;
+        [SerializeField] private bool hideMarkerTemplate = true;
         [SerializeField] private bool rebuildMarkersOnEnable = true;
         [SerializeField] private Color availableMarkerColor = new Color(1f, 0.82f, 0.12f, 1f);
         [SerializeField] private Color claimedMarkerColor = new Color(0.35f, 1f, 0.55f, 1f);
+        [SerializeField] private Color debugZeroMarkerColor = new Color(1f, 0.1f, 0.1f, 1f);
+        [SerializeField] private Color debugQuarterMarkerColor = new Color(1f, 0.82f, 0.12f, 1f);
+        [SerializeField] private Color debugHalfMarkerColor = new Color(0.35f, 1f, 0.55f, 1f);
+        [SerializeField] private Color debugThreeQuarterMarkerColor = new Color(0.1f, 0.7f, 1f, 1f);
 
         [Header("Loot")]
         [SerializeField] private GameObject lootPrefab;
@@ -83,11 +94,24 @@ namespace TSF
         private bool _active;
         private bool _completed;
         private Image[][] _zoneMarkerImages;
+#if UNITY_EDITOR
+        private bool _editorRebuildQueued;
+#endif
 
         private void OnEnable()
         {
             if (rebuildMarkersOnEnable)
                 RebuildBonusMarkers();
+        }
+
+        private void OnValidate()
+        {
+            markerRadius = Mathf.Max(0f, markerRadius);
+            markersPerZone = Mathf.Max(2, markersPerZone);
+
+#if UNITY_EDITOR
+            QueueEditorMarkerRebuild();
+#endif
         }
 
         public void OnHandEnter(ArmReachController reach, PortalSide side)
@@ -215,7 +239,7 @@ namespace TSF
             reach.RemovePortalWhenIdle(this, gameObject, removeDuration);
         }
 
-        [ContextMenu("Rebuild Bonus Markers")]
+        [ContextMenu("Bonus Markers/Rebuild Bonus Markers")]
         private void RebuildBonusMarkers()
         {
             RectTransform root = GetMarkersRoot();
@@ -223,6 +247,7 @@ namespace TSF
                 return;
 
             ClearGeneratedMarkers(root);
+            HideMarkerTemplateIfNeeded(root);
 
             _zoneMarkerImages = new Image[bonusZones.Length][];
             for (int zoneIndex = 0; zoneIndex < bonusZones.Length; zoneIndex++)
@@ -253,12 +278,66 @@ namespace TSF
             }
         }
 
+        [ContextMenu("Bonus Markers/Debug Cardinal Points")]
+        private void DebugCardinalMarkers()
+        {
+            RectTransform root = PrepareMarkerRoot();
+            if (root == null)
+                return;
+
+            CreateMarker(root, "Debug_0_Top", 0f, debugZeroMarkerColor);
+            CreateMarker(root, "Debug_025", 0.25f, debugQuarterMarkerColor);
+            CreateMarker(root, "Debug_050", 0.5f, debugHalfMarkerColor);
+            CreateMarker(root, "Debug_075", 0.75f, debugThreeQuarterMarkerColor);
+        }
+
+        [ContextMenu("Bonus Markers/Debug Bonus Zone Edges")]
+        private void DebugBonusZoneEdges()
+        {
+            RectTransform root = PrepareMarkerRoot();
+            if (root == null || bonusZones == null)
+                return;
+
+            for (int zoneIndex = 0; zoneIndex < bonusZones.Length; zoneIndex++)
+            {
+                BonusZone zone = bonusZones[zoneIndex];
+                if (zone == null)
+                    continue;
+
+                CreateMarker(root, $"Debug_Zone_{zoneIndex}_Start", zone.Start, debugZeroMarkerColor);
+                CreateMarker(root, $"Debug_Zone_{zoneIndex}_End", zone.End, debugHalfMarkerColor);
+            }
+        }
+
+        [ContextMenu("Bonus Markers/Clear Generated Markers")]
+        private void ClearBonusMarkersFromMenu()
+        {
+            RectTransform root = GetMarkersRoot();
+            if (root == null)
+                return;
+
+            ClearGeneratedMarkers(root);
+            _zoneMarkerImages = null;
+        }
+
         private RectTransform GetMarkersRoot()
         {
             if (bonusMarkersRoot != null)
                 return bonusMarkersRoot;
 
             return slider != null ? slider.transform as RectTransform : null;
+        }
+
+        private RectTransform PrepareMarkerRoot()
+        {
+            RectTransform root = GetMarkersRoot();
+            if (root == null || bonusMarkerPrefab == null)
+                return null;
+
+            ClearGeneratedMarkers(root);
+            HideMarkerTemplateIfNeeded(root);
+            _zoneMarkerImages = null;
+            return root;
         }
 
         private void ClearGeneratedMarkers(RectTransform root)
@@ -276,11 +355,28 @@ namespace TSF
             }
         }
 
+        private RectTransform CreateMarker(RectTransform root, string markerName, float value, Color color)
+        {
+            RectTransform marker = Instantiate(bonusMarkerPrefab, root);
+            marker.name = $"_GeneratedBonusMarker_{markerName}_{value:0.###}";
+            marker.gameObject.SetActive(true);
+            PlaceMarker(marker, value);
+
+            Image markerImage = marker.GetComponent<Image>();
+            if (markerImage != null)
+                markerImage.color = color;
+
+            return marker;
+        }
+
         private void PlaceMarker(RectTransform marker, float value)
         {
-            float angle = value * 360f - 90f;
+            float angleDirection = markersClockwise ? -1f : 1f;
+            float angle = markerZeroAngle + value * 360f * angleDirection;
             float radians = angle * Mathf.Deg2Rad;
             Vector2 direction = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
+            if (invertMarkerY)
+                direction.y *= -1f;
 
             marker.anchorMin = new Vector2(0.5f, 0.5f);
             marker.anchorMax = new Vector2(0.5f, 0.5f);
@@ -288,6 +384,33 @@ namespace TSF
             marker.anchoredPosition = direction * markerRadius;
             marker.localRotation = Quaternion.Euler(0f, 0f, angle + 90f);
         }
+
+        private void HideMarkerTemplateIfNeeded(RectTransform root)
+        {
+            if (!hideMarkerTemplate || bonusMarkerPrefab == null || bonusMarkerPrefab.parent != root)
+                return;
+
+            bonusMarkerPrefab.gameObject.SetActive(false);
+        }
+
+#if UNITY_EDITOR
+        private void QueueEditorMarkerRebuild()
+        {
+            if (Application.isPlaying || !isActiveAndEnabled || !rebuildMarkersOnEnable || _editorRebuildQueued)
+                return;
+
+            _editorRebuildQueued = true;
+            EditorApplication.delayCall += () =>
+            {
+                if (this == null)
+                    return;
+
+                _editorRebuildQueued = false;
+                if (!Application.isPlaying && isActiveAndEnabled && rebuildMarkersOnEnable)
+                    RebuildBonusMarkers();
+            };
+        }
+#endif
 
         private void RefreshBonusMarkers()
         {

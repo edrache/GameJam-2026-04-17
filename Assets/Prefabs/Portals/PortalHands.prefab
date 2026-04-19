@@ -345,10 +345,18 @@ PrefabInstance:
     - target: {fileID: 8126405539331543871, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: frontMiniGame
       value: 
-      objectReference: {fileID: 472204205683313977}
+      objectReference: {fileID: 5302886668519616159}
     - target: {fileID: 8839313726476700144, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8839313726476700144, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
+      propertyPath: lootPrefab
+      value: 
+      objectReference: {fileID: 358956735714532022, guid: 8450fbe42a1969c498470a2327f25810, type: 3}
+    - target: {fileID: 8839313726476700144, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
+      propertyPath: fillDuration
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2483765109876543210, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
@@ -365,22 +373,22 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 9146005278136543513}
   m_SourcePrefab: {fileID: 100100000, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
---- !u!114 &472204205683313977 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3869073034653985366, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
-  m_PrefabInstance: {fileID: 3691876733480658799}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8961988853221062099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57afa6f9015dc4b76a99733a92a5b4c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TSF.PortalSliderMiniGame
 --- !u!4 &2429378479059592021 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1336105153232077882, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
   m_PrefabInstance: {fileID: 3691876733480658799}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5302886668519616159 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8839313726476700144, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
+  m_PrefabInstance: {fileID: 3691876733480658799}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8961988853221062099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd8141b51837447ba4faec01296275b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSF.PortalBonusSliderMiniGame
 --- !u!1 &8961988853221062099 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5720503041697026748, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
