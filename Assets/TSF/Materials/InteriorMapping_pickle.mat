@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: InteriorMapping
+  m_Name: InteriorMapping_pickle
   m_Shader: {fileID: 4800000, guid: 35d5f94c2e3a44412a5b541cf27e138b, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -24,7 +24,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BackTex:
-        m_Texture: {fileID: 2800000, guid: 0a5a24e49e8b5814ebe400a0f609cf27, type: 3}
+        m_Texture: {fileID: 2800000, guid: d64d5f02892524d308bb319d1cffe0ff, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BottomTex:
