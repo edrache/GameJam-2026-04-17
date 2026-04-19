@@ -44,6 +44,7 @@ namespace TSF
         }
 
         public bool IsFullyOpen => Application.isPlaying && !_closing && _permanentlyOpen && _openAmount >= 1f;
+        public bool CanInteract => IsFullyOpen;
 
         private void Awake()
         {

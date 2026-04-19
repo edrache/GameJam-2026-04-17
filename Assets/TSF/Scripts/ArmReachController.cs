@@ -17,6 +17,8 @@ namespace TSF
         [SerializeField] private Transform lootPoint;
         [SerializeField] private string idleStateName = "Idle";
         [SerializeField] private MMF_Player handEnterPortalFeedback;
+        [Tooltip("Scene object shown when the player is close enough to an already open portal.")]
+        [SerializeField] private GameObject portalInteractionReadyObject;
 
         private Player _player;
         private bool _initialized;
@@ -26,10 +28,19 @@ namespace TSF
         private IPortalMiniGame _exitLockedMiniGame;
         private PortalAnimator _activePortal;
 
+        void OnEnable()
+        {
+            SetPortalInteractionReadyObjectVisible(false);
+        }
+
         void Update()
         {
-            if (armAnimator == null) return;
-            if (!ReInput.isReady) return;
+            if (armAnimator == null || !ReInput.isReady)
+            {
+                SetPortalInteractionReadyObjectVisible(false);
+                return;
+            }
+
             if (!_initialized) Initialize();
 
             bool reaching = _player.GetButton("Reach");
@@ -51,6 +62,8 @@ namespace TSF
                 if (_handInPortal && !exitLocked)
                     OnHandExitPortal();
             }
+
+            UpdatePortalInteractionReadyObjectVisibility();
         }
 
         void LateUpdate()
@@ -68,6 +81,8 @@ namespace TSF
         {
             if (_handInPortal)
                 OnHandExitPortal();
+
+            SetPortalInteractionReadyObjectVisible(false);
         }
 
         private void Initialize()
@@ -92,6 +107,9 @@ namespace TSF
             float nearestDist = reachDistance;
             foreach (PortalAnimator portal in portals)
             {
+                if (!portal.CanInteract)
+                    continue;
+
                 float dist = Vector3.Distance(transform.position, portal.transform.position);
                 if (dist < nearestDist)
                 {
@@ -104,15 +122,16 @@ namespace TSF
 
         private void OnHandEnterPortal()
         {
-            _handInPortal = true;
             PortalAnimator portal = FindPortalInReach();
             if (portal == null) return;
 
+            _handInPortal = true;
             handEnterPortalFeedback?.PlayFeedbacks();
 
             PortalSide side = GetPortalSide(portal);
             _activePortal = portal;
             _activeMiniGame = GetPortalMiniGame(portal);
+            UpdatePortalInteractionReadyObjectVisibility();
             _activeMiniGame?.OnHandEnter(this, side);
         }
 
@@ -123,6 +142,7 @@ namespace TSF
             _exitLockedMiniGame = null;
             _activeMiniGame = null;
             _activePortal = null;
+            UpdatePortalInteractionReadyObjectVisibility();
         }
 
         public void TriggerLoot()
@@ -149,6 +169,7 @@ namespace TSF
             _exitLockedMiniGame = null;
             _activeMiniGame = null;
             _activePortal = null;
+            UpdatePortalInteractionReadyObjectVisibility();
         }
 
         public bool LockMiniGameExit(IPortalMiniGame miniGame)
@@ -236,6 +257,21 @@ namespace TSF
         private bool IsMiniGameExitLocked()
         {
             return _exitLockedMiniGame != null && IsActiveOrRoutedMiniGame(_exitLockedMiniGame);
+        }
+
+        private void UpdatePortalInteractionReadyObjectVisibility()
+        {
+            bool visible = !_handInPortal && !_suppressPortalEnterUntilExit && FindPortalInReach() != null;
+            SetPortalInteractionReadyObjectVisible(visible);
+        }
+
+        private void SetPortalInteractionReadyObjectVisible(bool visible)
+        {
+            if (portalInteractionReadyObject == null)
+                return;
+
+            if (portalInteractionReadyObject.activeSelf != visible)
+                portalInteractionReadyObject.SetActive(visible);
         }
 
         private bool IsActiveOrRoutedMiniGame(IPortalMiniGame miniGame)
