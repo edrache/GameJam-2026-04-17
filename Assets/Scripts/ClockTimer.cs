@@ -28,7 +28,7 @@ public class ClockTimer : MonoBehaviour
     private bool running;
 
     public float TimeRemaining => timeRemaining;
-    public float NormalizedTime => timeRemaining / totalTime;
+    public float NormalizedTime => totalTime > 0f ? Mathf.Clamp01(timeRemaining / totalTime) : 0f;
 
     void Start()
     {
@@ -49,6 +49,8 @@ public class ClockTimer : MonoBehaviour
             UpdateText();
             UpdateColor();
             onTimeUp?.Invoke();
+            if (LootAbilityManager.Instance != null && ScoreManager.Instance != null)
+                LootAbilityManager.Instance.ApplyEndGameBonuses(ScoreManager.Instance.Score);
             bool isNewHighScore = ScoreManager.Instance != null && ScoreManager.Instance.CheckAndSaveHighScore();
             int finalScore = ScoreManager.Instance != null ? ScoreManager.Instance.Score : 0;
             timesUpWindow?.Show(finalScore, isNewHighScore);
@@ -56,7 +58,7 @@ public class ClockTimer : MonoBehaviour
             return;
         }
 
-        SetRight(Mathf.Lerp(rightEnd, rightStart, timeRemaining / totalTime));
+        SetRight(Mathf.Lerp(rightEnd, rightStart, NormalizedTime));
         UpdateText();
         UpdateColor();
     }
@@ -75,6 +77,17 @@ public class ClockTimer : MonoBehaviour
 
     public void ResumeTimer() => running = true;
 
+    public void AddTime(float seconds)
+    {
+        if (seconds <= 0f)
+            return;
+
+        timeRemaining = Mathf.Max(0f, timeRemaining + seconds);
+        SetRight(Mathf.Lerp(rightEnd, rightStart, NormalizedTime));
+        UpdateText();
+        UpdateColor();
+    }
+
     private void UpdateText()
     {
         if (timerText == null) return;
@@ -90,6 +103,8 @@ public class ClockTimer : MonoBehaviour
 
         bool isWarning = timeRemaining <= warningTime;
         fillImage.color = isWarning ? warningColor : normalColor;
+        if (!isWarning)
+            warningTriggered = false;
 
         if (isWarning && !warningTriggered)
         {

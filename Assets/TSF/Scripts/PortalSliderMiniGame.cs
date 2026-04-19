@@ -44,25 +44,10 @@ namespace TSF
                 _completed = true;
                 slider.gameObject.SetActive(false);
                 completionFeedback?.PlayFeedbacks();
-                AwardLootScore();
+                LootAwarder.Award(lootPrefab, fallbackLootPoints);
                 _reach.TriggerLoot(lootPrefab);
                 QueuePortalRemoval();
             }
-        }
-
-        private void AwardLootScore()
-        {
-            if (lootPrefab == null)
-                return;
-
-            int points = fallbackLootPoints;
-            LootScoreValue lootScoreValue = lootPrefab.GetComponentInChildren<LootScoreValue>();
-            if (lootScoreValue != null)
-                points = lootScoreValue.Points;
-
-            ScoreManager scoreManager = ScoreManager.Instance;
-            if (scoreManager != null)
-                scoreManager.AddScore(points);
         }
 
         private void QueuePortalRemoval()

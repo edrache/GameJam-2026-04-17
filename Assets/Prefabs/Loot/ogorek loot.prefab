@@ -1,0 +1,234 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5266301804511876248
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+      propertyPath: m_Name
+      value: ogorek loot
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674492413018264177, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 7.475032
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674492413018264177, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 40.05519
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674492413018264177, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -62.409893
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a4a13639c59664a24b32bc748fdeed7b, type: 2}
+    - target: {fileID: 7411381618238099608, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -0.000004325711
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -3747831510467452783}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8895134097462029589}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7447590835724677020}
+  m_SourcePrefab: {fileID: 100100000, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+--- !u!1 &5031858095758830025 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b6e83b5b762822c4fbafe06d1b2221ca, type: 3}
+  m_PrefabInstance: {fileID: 5266301804511876248}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-3747831510467452783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5031858095758830025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a3a2b726a34f18a11dd43b8bdbb52c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSF.LootScoreValue
+  points: 20
+  lootId: 
+  displayName: picklemarek
+  icon: {fileID: 21300000, guid: c525e86e96789424cb96c69c13361276, type: 3}
+  abilities:
+  - abilityId: 
+    type: 1
+    seconds: 0
+    multiplier: 2
+    score: 0
+    requiredLootIds: []
+--- !u!82 &8895134097462029589
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5031858095758830025}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 472016e3713f64bf093b6f12f3e5afe7, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &7447590835724677020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5031858095758830025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03225aacac5149efbf0a1abc54bee7c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSF.AnimationAudioEventPlayer
+  audioSource: {fileID: 8895134097462029589}
+  warnWhenMissingEvent: 1
+  soundEvents:
+  - id: pickle
+    clips:
+    - {fileID: 8300000, guid: 51344be05dc8b49bcb63a895e4817081, type: 3}
+    volume: 1
+    pitchRange: {x: 1, y: 1}
+    cooldown: 0

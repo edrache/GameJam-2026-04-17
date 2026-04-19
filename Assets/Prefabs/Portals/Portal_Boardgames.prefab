@@ -838,15 +838,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1336105153232077882, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.63
+      value: -16.07
       objectReference: {fileID: 0}
     - target: {fileID: 1336105153232077882, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.15
+      value: 1.81662
       objectReference: {fileID: 0}
     - target: {fileID: 1336105153232077882, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -8.54
       objectReference: {fileID: 0}
     - target: {fileID: 1336105153232077882, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -876,9 +876,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3203461776438142057, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.78124094
+      objectReference: {fileID: 0}
+    - target: {fileID: 3203461776438142057, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3203461776438142057, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5720503041697026748, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: m_Name
       value: Portal_Boardgames
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720503041697026748, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6773186821305514070, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -887,7 +903,7 @@ PrefabInstance:
     - target: {fileID: 8126405539331543871, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: backMiniGame
       value: 
-      objectReference: {fileID: 9140846624493330677}
+      objectReference: {fileID: 3873833141660965924}
     - target: {fileID: 8126405539331543871, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       propertyPath: frontMiniGame
       value: 
@@ -904,6 +920,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5720503041697026748, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9140846624493330677}
+    - targetCorrespondingSourceObject: {fileID: 5720503041697026748, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3873833141660965924}
   m_SourcePrefab: {fileID: 100100000, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
 --- !u!1 &1077863089806434629 stripped
 GameObject:
@@ -948,7 +967,48 @@ MonoBehaviour:
   fallbackLootPoints: 10
   removeDuration: 0.25
   minimumPortalDistance: 0.5
-  lookTarget: {fileID: 0}
+  lookTarget: {fileID: 5988896346209908675}
+  wrongDisplayTime: 0.8
+  completionFeedback: {fileID: 9153399990109773467, guid: 5bfd6080f1ff45f4fb23ab2ecc863976, type: 3}
+--- !u!114 &3873833141660965924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077863089806434629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d8908c948e4e93429547300a2898c3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MiniGameFind
+  slots:
+  - {fileID: 7738950376440030829}
+  - {fileID: 2082819015014518572}
+  - {fileID: 558590003337274273}
+  - {fileID: 6128639043514239983}
+  - {fileID: 8928044509823770974}
+  - {fileID: 257995121866549065}
+  - {fileID: 6437096331239791504}
+  - {fileID: 3319078933613852345}
+  - {fileID: 6605792111543748127}
+  spritePool:
+  - {fileID: 21300000, guid: 9deb75cded65db140ba5222dced6d951, type: 3}
+  - {fileID: 21300000, guid: 6e5e77c65121c4f42abfac3bd484be7b, type: 3}
+  - {fileID: 21300000, guid: bc3f41a6136e4c046acd740ecfe7dc93, type: 3}
+  - {fileID: 21300000, guid: 0c3f6f2d55c0f764f9ae15bff564fc6d, type: 3}
+  - {fileID: 21300000, guid: 56579958a61494748b90a02585ae5bb1, type: 3}
+  - {fileID: 21300000, guid: 522eaadf9c737ff4fa90d98327e626eb, type: 3}
+  - {fileID: 21300000, guid: edacb70bff0d15d4a877e3108d181915, type: 3}
+  - {fileID: 21300000, guid: 15a5626830261bc449d2b204b4a4ee85, type: 3}
+  - {fileID: 21300000, guid: 0ffda4be1b83b694d9bb1babe6c31ac2, type: 3}
+  miniGameCanvas: {fileID: 899633965110980125}
+  failIconsContainer: {fileID: 1327562338476158909}
+  lootPrefab: {fileID: 5360101305971101294, guid: d2c5d9bd0331544fe8c27b3e34bc244b, type: 3}
+  fallbackLootPoints: 10
+  removeDuration: 0.25
+  minimumPortalDistance: 0.5
+  lookTarget: {fileID: 5988896346209908675}
   wrongDisplayTime: 0.8
   completionFeedback: {fileID: 9153399990109773467, guid: 5bfd6080f1ff45f4fb23ab2ecc863976, type: 3}
 --- !u!4 &5988896346209908675 stripped

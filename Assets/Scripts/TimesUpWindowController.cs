@@ -13,6 +13,7 @@ public class TimesUpWindowController : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private TMP_Text finalScoreText;
     [SerializeField] private TMP_Text highScoreText;
+    [SerializeField] private TMP_Text scoreSummaryText;
     [SerializeField] private string finalScorePrefix = "Score: ";
     [SerializeField] private string highScorePrefix = "Best: ";
     [SerializeField] private string newHighScoreLabel = "New Best!";
@@ -56,6 +57,11 @@ public class TimesUpWindowController : MonoBehaviour
                 highScoreText.text = $"{highScorePrefix}{best}";
             }
         }
+
+        if (scoreSummaryText != null)
+            scoreSummaryText.text = ScoreManager.Instance != null
+                ? ScoreManager.Instance.BuildScoreSummary()
+                : "No score summary available.";
 
         if (showFeedback != null)
         {

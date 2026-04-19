@@ -787,7 +787,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 6
+      value: 2
       mode: 0
       spread: 0
       speed:
@@ -5054,6 +5054,7 @@ RectTransform:
   - {fileID: 2521596707203799440}
   - {fileID: 8111963282334283167}
   - {fileID: 9133394725320348313}
+  - {fileID: 5531177118568763241}
   m_Father: {fileID: 9216698960021636872}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -5184,6 +5185,81 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &4997898090882528145
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5531177118568763241}
+  - component: {fileID: 808530051776002113}
+  - component: {fileID: 562812734911013028}
+  m_Layer: 0
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5531177118568763241
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4997898090882528145}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2716690530234485140}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 10, y: 10}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &808530051776002113
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4997898090882528145}
+  m_CullTransparentMesh: 1
+--- !u!114 &562812734911013028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4997898090882528145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 16a86a7f581fc4dfb953e0df8ad3ecac, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &5357771393620346903
 GameObject:
   m_ObjectHideFlags: 0
@@ -5278,6 +5354,7 @@ GameObject:
   - component: {fileID: 6247704878920346067}
   - component: {fileID: 1757992903975450764}
   - component: {fileID: 6107009451555611607}
+  - component: {fileID: 8839313726476700144}
   m_Layer: 0
   m_Name: Portal
   m_TagString: Untagged
@@ -5429,7 +5506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cb888754f5a4c6985faf2205f0a920a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TSF.PortalSideMiniGameRouter
-  frontMiniGame: {fileID: 3869073034653985366}
+  frontMiniGame: {fileID: 8839313726476700144}
   backMiniGame: {fileID: 2483765109876543210}
   fallbackToOtherSide: 1
 --- !u!114 &2483765109876543210
@@ -5686,6 +5763,43 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8839313726476700144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5720503041697026748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd8141b51837447ba4faec01296275b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TSF.PortalBonusSliderMiniGame
+  slider: {fileID: 4797017747737661814}
+  fillDuration: 3
+  hitMode: 0
+  bonusAction: Bonus
+  bonusScore: 20
+  bonusZones:
+  - start: 0.25
+    end: 0.35
+  - start: 0.25
+    end: 0.35
+  - start: 0.25
+    end: 0.35
+  bonusMarkersRoot: {fileID: 0}
+  bonusMarkerPrefab: {fileID: 5531177118568763241}
+  markerRadius: 80
+  markersPerZone: 10
+  rebuildMarkersOnEnable: 1
+  availableMarkerColor: {r: 1, g: 0.82, b: 0.12, a: 1}
+  claimedMarkerColor: {r: 0.35, g: 1, b: 0.55, a: 1}
+  lootPrefab: {fileID: 5031858095758830025, guid: 1854723fbec4f44eaa535bfdaa06ce6a, type: 3}
+  fallbackLootPoints: 10
+  removeDuration: 0.25
+  bonusHitFeedback: {fileID: 0}
+  bonusMissFeedback: {fileID: 0}
+  completionFeedback: {fileID: 0}
 --- !u!1 &6046960591898842866
 GameObject:
   m_ObjectHideFlags: 0

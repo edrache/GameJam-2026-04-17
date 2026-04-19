@@ -503,7 +503,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  portalCount: 5
+  portalCount: 10
   overlapCheckRadius: 0.6
   overlapCheckMask:
     serializedVersion: 2

@@ -283,25 +283,11 @@ public class MiniGameFind : MonoBehaviour, IPortalMiniGame
         _completed = true;
         SetWindowVisible(false);
         completionFeedback?.PlayFeedbacks();
-        AwardLootScore();
+        LootAwarder.Award(lootPrefab, fallbackLootPoints);
         _reach.UnlockMiniGameExit(this);
         ClearPlayerLock();
         _reach.TriggerLoot(lootPrefab);
         QueuePortalRemoval();
-    }
-
-    private void AwardLootScore()
-    {
-        if (lootPrefab == null) return;
-
-        int points = fallbackLootPoints;
-        LootScoreValue lootScoreValue = lootPrefab.GetComponentInChildren<LootScoreValue>();
-        if (lootScoreValue != null)
-            points = lootScoreValue.Points;
-
-        ScoreManager scoreManager = ScoreManager.Instance;
-        if (scoreManager != null)
-            scoreManager.AddScore(points);
     }
 
     private void QueuePortalRemoval()
