@@ -11,6 +11,7 @@ namespace TSF
     public class ScoreManager : MonoBehaviour
     {
         private const string HighScoreKey = "HighScore";
+        private const string PortalSliderBonusSource = "Portal slider bonus";
 
         private static ScoreManager _instance;
 
@@ -138,12 +139,18 @@ namespace TSF
                 return builder.ToString();
             }
 
+            AppendPortalSliderBonusSummary(builder);
+
+            int scoreChangeIndex = 1;
             builder.AppendLine("Score changes:");
             for (int i = 0; i < _scoreLog.Count; i++)
             {
                 ScoreLogEntry entry = _scoreLog[i];
+                if (IsPortalSliderBonusEntry(entry))
+                    continue;
+
                 string sign = entry.Delta > 0 ? "+" : string.Empty;
-                builder.Append($"{i + 1}. {sign}{entry.Delta} ({entry.PreviousScore} -> {entry.NewScore})");
+                builder.Append($"{scoreChangeIndex}. {sign}{entry.Delta} ({entry.PreviousScore} -> {entry.NewScore})");
 
                 if (!string.IsNullOrWhiteSpace(entry.Source))
                     builder.Append($" - {entry.Source}");
@@ -152,7 +159,11 @@ namespace TSF
                     builder.Append($": {entry.Reason}");
 
                 builder.AppendLine();
+                scoreChangeIndex++;
             }
+
+            if (scoreChangeIndex == 1)
+                builder.AppendLine("None besides grouped portal slider bonuses.");
 
             return builder.ToString();
         }
@@ -188,6 +199,33 @@ namespace TSF
             }
 
             builder.AppendLine();
+        }
+
+        private void AppendPortalSliderBonusSummary(StringBuilder builder)
+        {
+            int hits = 0;
+            int points = 0;
+
+            for (int i = 0; i < _scoreLog.Count; i++)
+            {
+                ScoreLogEntry entry = _scoreLog[i];
+                if (!IsPortalSliderBonusEntry(entry))
+                    continue;
+
+                hits++;
+                points += entry.Delta;
+            }
+
+            if (hits == 0)
+                return;
+
+            builder.AppendLine($"Portal slider bonuses: {hits} successful hits, +{points} points");
+            builder.AppendLine();
+        }
+
+        private bool IsPortalSliderBonusEntry(ScoreLogEntry entry)
+        {
+            return entry != null && entry.Source == PortalSliderBonusSource;
         }
 
         private void RecordScoreChange(string source, string reason, int delta, int previousScore, int newScore)

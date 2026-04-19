@@ -1,3 +1,4 @@
+using System.Collections;
 using MoreMountains.Feedbacks;
 using Rewired;
 using UnityEngine;
@@ -66,11 +67,13 @@ namespace TSF
         [SerializeField] private RectTransform bonusMarkerPrefab;
         [SerializeField, Min(0f)] private float markerRadius = 80f;
         [SerializeField, Min(2)] private int markersPerZone = 5;
-        [SerializeField] private float markerZeroAngle = 90f;
+        [SerializeField] private float markerZeroAngle = -90f;
+        [SerializeField] private float markerSweepDegrees = 360f;
         [SerializeField] private bool markersClockwise = true;
         [SerializeField] private bool invertMarkerY = true;
         [SerializeField] private bool hideMarkerTemplate = true;
         [SerializeField] private bool rebuildMarkersOnEnable = true;
+        [SerializeField] private bool rebuildMarkersOnHandEnter = true;
         [SerializeField] private Color availableMarkerColor = new Color(1f, 0.82f, 0.12f, 1f);
         [SerializeField] private Color claimedMarkerColor = new Color(0.35f, 1f, 0.55f, 1f);
         [SerializeField] private Color debugZeroMarkerColor = new Color(1f, 0.1f, 0.1f, 1f);
@@ -93,6 +96,7 @@ namespace TSF
         private bool _initialized;
         private bool _active;
         private bool _completed;
+        private Coroutine _markerRebuildCoroutine;
         private Image[][] _zoneMarkerImages;
 #if UNITY_EDITOR
         private bool _editorRebuildQueued;
@@ -123,6 +127,9 @@ namespace TSF
 
             if (slider != null)
                 slider.gameObject.SetActive(true);
+
+            if (rebuildMarkersOnHandEnter)
+                QueueRuntimeMarkerRebuild();
         }
 
         public void OnHandExit()
@@ -174,11 +181,12 @@ namespace TSF
             switch (hitMode)
             {
                 case BonusHitMode.CompleteSlider:
+                    ScoreManager.Instance?.AddScore(0, "Portal slider bonus", "Hit the bonus zone and completed the slider instantly.");
                     slider.value = 1f;
                     Complete();
                     break;
                 case BonusHitMode.AddScore:
-                    ScoreManager.Instance?.AddScore(bonusScore, "Bonus zone", "Hit the active bonus zone in the portal slider.");
+                    ScoreManager.Instance?.AddScore(bonusScore, "Portal slider bonus", "Hit the active bonus zone.");
                     break;
             }
         }
@@ -263,7 +271,7 @@ namespace TSF
                 {
                     float progress = markerCount == 1 ? 0.5f : markerIndex / (markerCount - 1f);
                     float value = Mathf.Lerp(zone.Start, zone.End, progress);
-                    RectTransform marker = Instantiate(bonusMarkerPrefab, root);
+                    RectTransform marker = Instantiate(bonusMarkerPrefab, root, false);
                     marker.name = $"_GeneratedBonusMarker_{zoneIndex}_{markerIndex}";
                     marker.gameObject.SetActive(true);
                     PlaceMarker(marker, value);
@@ -307,6 +315,16 @@ namespace TSF
                 CreateMarker(root, $"Debug_Zone_{zoneIndex}_Start", zone.Start, debugZeroMarkerColor);
                 CreateMarker(root, $"Debug_Zone_{zoneIndex}_End", zone.End, debugHalfMarkerColor);
             }
+        }
+
+        [ContextMenu("Bonus Markers/Debug Current Slider Value")]
+        private void DebugCurrentSliderValue()
+        {
+            RectTransform root = PrepareMarkerRoot();
+            if (root == null || slider == null)
+                return;
+
+            CreateMarker(root, "Debug_Current_Slider_Value", slider.value, debugThreeQuarterMarkerColor);
         }
 
         [ContextMenu("Bonus Markers/Clear Generated Markers")]
@@ -357,7 +375,7 @@ namespace TSF
 
         private RectTransform CreateMarker(RectTransform root, string markerName, float value, Color color)
         {
-            RectTransform marker = Instantiate(bonusMarkerPrefab, root);
+            RectTransform marker = Instantiate(bonusMarkerPrefab, root, false);
             marker.name = $"_GeneratedBonusMarker_{markerName}_{value:0.###}";
             marker.gameObject.SetActive(true);
             PlaceMarker(marker, value);
@@ -369,10 +387,33 @@ namespace TSF
             return marker;
         }
 
+        private void QueueRuntimeMarkerRebuild()
+        {
+            if (!Application.isPlaying)
+            {
+                RebuildBonusMarkers();
+                return;
+            }
+
+            if (_markerRebuildCoroutine != null)
+                StopCoroutine(_markerRebuildCoroutine);
+
+            _markerRebuildCoroutine = StartCoroutine(RebuildMarkersAfterLayout());
+        }
+
+        private IEnumerator RebuildMarkersAfterLayout()
+        {
+            yield return null;
+            Canvas.ForceUpdateCanvases();
+            RebuildBonusMarkers();
+            RefreshBonusMarkers();
+            _markerRebuildCoroutine = null;
+        }
+
         private void PlaceMarker(RectTransform marker, float value)
         {
-            float angleDirection = markersClockwise ? -1f : 1f;
-            float angle = markerZeroAngle + value * 360f * angleDirection;
+            float angleDirection = markersClockwise == invertMarkerY ? 1f : -1f;
+            float angle = markerZeroAngle + value * markerSweepDegrees * angleDirection;
             float radians = angle * Mathf.Deg2Rad;
             Vector2 direction = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
             if (invertMarkerY)
