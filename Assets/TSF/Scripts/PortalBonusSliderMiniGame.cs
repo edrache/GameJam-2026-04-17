@@ -81,6 +81,10 @@ namespace TSF
         [SerializeField] private Color debugHalfMarkerColor = new Color(0.35f, 1f, 0.55f, 1f);
         [SerializeField] private Color debugThreeQuarterMarkerColor = new Color(0.1f, 0.7f, 1f, 1f);
 
+        [Header("Bonus Indicator")]
+        [SerializeField] private GameObject activeBonusIndicator;
+        [SerializeField] private bool hideIndicatorForClaimedZones = true;
+
         [Header("Loot")]
         [SerializeField] private GameObject lootPrefab;
         [SerializeField, Min(0)] private int fallbackLootPoints = 10;
@@ -130,6 +134,8 @@ namespace TSF
 
             if (rebuildMarkersOnHandEnter)
                 QueueRuntimeMarkerRebuild();
+
+            RefreshBonusIndicator();
         }
 
         public void OnHandExit()
@@ -139,6 +145,8 @@ namespace TSF
 
             if (slider != null)
                 slider.gameObject.SetActive(false);
+
+            SetBonusIndicatorVisible(false);
         }
 
         private void Update()
@@ -150,6 +158,7 @@ namespace TSF
                 Initialize();
 
             slider.value += Time.deltaTime / fillDuration;
+            RefreshBonusIndicator();
 
             if (_player != null && !string.IsNullOrEmpty(bonusAction) && _player.GetButtonDown(bonusAction))
                 HandleBonusInput();
@@ -176,6 +185,7 @@ namespace TSF
 
             zone.Claim();
             RefreshBonusMarkers();
+            RefreshBonusIndicator();
             bonusHitFeedback?.PlayFeedbacks();
 
             switch (hitMode)
@@ -212,12 +222,16 @@ namespace TSF
                 slider.value = 0f;
 
             if (bonusZones == null)
+            {
+                RefreshBonusIndicator();
                 return;
+            }
 
             for (int i = 0; i < bonusZones.Length; i++)
                 bonusZones[i]?.Reset();
 
             RefreshBonusMarkers();
+            RefreshBonusIndicator();
         }
 
         private void Complete()
@@ -231,6 +245,7 @@ namespace TSF
             if (slider != null)
                 slider.gameObject.SetActive(false);
 
+            SetBonusIndicatorVisible(false);
             completionFeedback?.PlayFeedbacks();
             LootAwarder.Award(lootPrefab, fallbackLootPoints);
             _reach?.TriggerLoot(lootPrefab);
@@ -475,6 +490,41 @@ namespace TSF
                         markers[markerIndex].color = color;
                 }
             }
+        }
+
+        private void RefreshBonusIndicator()
+        {
+            if (activeBonusIndicator == null || slider == null)
+                return;
+
+            SetBonusIndicatorVisible(IsSliderInBonusZone());
+        }
+
+        private bool IsSliderInBonusZone()
+        {
+            if (!_active || _completed || bonusZones == null || slider == null)
+                return false;
+
+            for (int i = 0; i < bonusZones.Length; i++)
+            {
+                BonusZone zone = bonusZones[i];
+                if (zone == null)
+                    continue;
+
+                if (hideIndicatorForClaimedZones && zone.Claimed)
+                    continue;
+
+                if (zone.Contains(slider.value))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private void SetBonusIndicatorVisible(bool visible)
+        {
+            if (activeBonusIndicator != null && activeBonusIndicator.activeSelf != visible)
+                activeBonusIndicator.SetActive(visible);
         }
     }
 }
