@@ -1,5 +1,6 @@
 using MoreMountains.Feedbacks;
 using TMPro;
+using TSF;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -16,6 +17,8 @@ public class ClockTimer : MonoBehaviour
     [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color warningColor = Color.red;
     [SerializeField] private MMF_Player warningFeedback;
+    [SerializeField] private bool pauseOnTimeUp = true;
+    [SerializeField] private TimesUpWindowController timesUpWindow;
 
     private bool warningTriggered;
 
@@ -46,6 +49,10 @@ public class ClockTimer : MonoBehaviour
             UpdateText();
             UpdateColor();
             onTimeUp?.Invoke();
+            bool isNewHighScore = ScoreManager.Instance != null && ScoreManager.Instance.CheckAndSaveHighScore();
+            int finalScore = ScoreManager.Instance != null ? ScoreManager.Instance.Score : 0;
+            timesUpWindow?.Show(finalScore, isNewHighScore);
+            if (pauseOnTimeUp) Time.timeScale = 0f;
             return;
         }
 

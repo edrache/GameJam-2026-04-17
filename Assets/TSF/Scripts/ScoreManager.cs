@@ -7,6 +7,8 @@ namespace TSF
 {
     public class ScoreManager : MonoBehaviour
     {
+        private const string HighScoreKey = "HighScore";
+
         private static ScoreManager _instance;
 
         [SerializeField] private TMP_Text scoreText;
@@ -31,6 +33,23 @@ namespace TSF
         }
 
         public int Score => _score;
+        public int HighScore => PlayerPrefs.GetInt(HighScoreKey, 0);
+
+        // Returns true if current score is a new high score.
+        public bool CheckAndSaveHighScore()
+        {
+            int current = _score;
+            int best = HighScore;
+            if (current <= best) return false;
+            PlayerPrefs.SetInt(HighScoreKey, current);
+            PlayerPrefs.Save();
+            return true;
+        }
+
+        public void ClearHighScore()
+        {
+            PlayerPrefs.DeleteKey(HighScoreKey);
+        }
 
         private void Awake()
         {
