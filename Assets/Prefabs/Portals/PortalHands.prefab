@@ -346,6 +346,10 @@ PrefabInstance:
       propertyPath: frontMiniGame
       value: 
       objectReference: {fileID: 472204205683313977}
+    - target: {fileID: 8839313726476700144, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2483765109876543210, guid: 9cb15c10ec1914e5cbb2469591e8c4c2, type: 3}
     m_RemovedGameObjects: []
